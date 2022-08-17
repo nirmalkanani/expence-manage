@@ -9,10 +9,11 @@ const ExpenceChart = () => {
     const [ year, setYears ] = useState()
     const [ months, setMonths ] = useState()
 
+    const [ dataByMonths, setDataByMonth ] = useState()
+
     const [ getValue, setGetValue ] = useState({
         GetYear:""
     })
-
     // const [ recieveData, setRecieveData ] = useState([])
 
     const getDate = (item) => {
@@ -31,6 +32,8 @@ const ExpenceChart = () => {
                 ALL_YEAR.push(Yy)
                 ALL_MONTH.push(Mm)
             }
+
+            const 
         })
         setYears(ALL_YEAR)
         setMonths(ALL_MONTH)
@@ -132,3 +135,4 @@ const ExpenceChart = () => {
 }
 
 export default ExpenceChart
+
