@@ -6,13 +6,13 @@ const ExpenceChart = () => {
 
     const getData = useSelector((state) => state.dataReducer.expencesData)
 
-    const [ year, setYears ] = useState()
-    const [ months, setMonths ] = useState()
+    const [year, setYears] = useState()
+    const [months, setMonths] = useState()
 
-    const [ dataByMonths, setDataByMonth ] = useState()
+    const [dataByMonths, setDataByMonth] = useState()
 
-    const [ getValue, setGetValue ] = useState({
-        GetYear:""
+    const [getValue, setGetValue] = useState({
+        GetYear: ""
     })
     // const [ recieveData, setRecieveData ] = useState([])
 
@@ -20,14 +20,16 @@ const ExpenceChart = () => {
 
         const ALL_YEAR = []
         const ALL_MONTH = []
-        
-        item?.map((element,index) => {
+
+        item?.map((element, index) => {
             const finaldate = element.date
             const Yy = moment(finaldate, "DD-MM-YYYY").format("YYYY")
             const Mm = moment(finaldate, "DD-MM-YYYY").format("MM")
-            if(ALL_YEAR.includes(Yy) && ALL_MONTH.includes(Mm)){
+            if (ALL_YEAR.includes(Yy)) {
                 return ""
-            } else{
+            } else if (ALL_MONTH.includes(Mm)) {
+                return ""
+            } else {
                 ALL_YEAR.push(Yy)
                 ALL_MONTH.push(Mm)
             }
@@ -35,33 +37,40 @@ const ExpenceChart = () => {
 
         setYears(ALL_YEAR)
         setMonths(ALL_MONTH)
-        console.log(months)
+        // console.log(months)
 
-        const DataMonth = item?.filter((element,index) => moment(element.date, "DD-MM-YYYY").format("MM") === ALL_MONTH[index])
-        console.log(DataMonth)
-        
+        // const DataMonth = item?.filter((element,index) => moment(element.date, "DD-MM-YYYY").format("MM") === ALL_MONTH[index])
+        // console.log(DataMonth)
+
     }
-    
+
     useEffect(() => {
         getDate(getData)
-    },[getData])
+    }, [getData])
+
+    const OUT_DATA = []
 
     const handleChange = (e) => {
-        setGetValue({...getValue, [e.target.name]: e.target.value })
-        const FilterData = getData.filter((element,index) => moment(element.date,"DD-MM-YYYY").format("YYYY") === e.target.value)
+        setGetValue({ ...getValue, [e.target.name]: e.target.value })
+        const FilterData = getData.filter((element, index) => moment(element.date, "DD-MM-YYYY").format("YYYY") === e.target.value)
         console.log(FilterData)
-        const FilderMonth = FilterData.filter((element)=> moment(element.date, "DD-MM-YYYY").format("MM") === months)
-        console.log(FilderMonth)
+
+        const FilterMonth = FilterData.filter((element) => {
+            months.includes(moment(element.date, "DD-MM-YYYY").format("MM"))
+            return OUT_DATA.push(element)
+        })
+        console.log(OUT_DATA)
+        console.log(FilterMonth)
     }
 
     return (
         <div className="container">
             <div className="row text-end">
                 <div className="col-12 my-5">
-                    <select name="GetYear" id="years" className='px-3 py-2 text-dark' onChange={(e)=> handleChange(e)}>
+                    <select name="GetYear" id="years" className='px-3 py-2 text-dark' onChange={(e) => handleChange(e)}>
                         <option value="Select Year">Select Year</option>
                         {
-                            year?.map((element,index)=> <option value={element} key={index} name="GetYear" >{element}</option>)
+                            year?.map((element, index) => <option value={element} key={index} name="GetYear" >{element}</option>)
                         }
                     </select>
                 </div>
