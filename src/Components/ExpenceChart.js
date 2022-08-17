@@ -7,27 +7,33 @@ const ExpenceChart = () => {
     const getData = useSelector((state) => state.dataReducer.expencesData)
 
     const [ year, setYears ] = useState()
+    const [ months, setMonths ] = useState()
 
     const [ getValue, setGetValue ] = useState({
         GetYear:""
     })
 
-    const [ recieveData, setRecieveData ] = useState([])
+    // const [ recieveData, setRecieveData ] = useState([])
 
     const getDate = (item) => {
 
         const ALL_YEAR = []
+        const ALL_MONTH = []
         
         item?.map((element,index) => {
             const finaldate = element.date
             const Yy = moment(finaldate, "DD-MM-YYYY").format("YYYY")
-            if(ALL_YEAR.includes(Yy)){
+            const Mm = moment(finaldate, "DD-MM-YYYY").format("MM")
+            console.log(Mm)
+            if(ALL_YEAR.includes(Yy) && ALL_MONTH.includes(Mm)){
                 return console.log("True")
             } else{
-                return ALL_YEAR.push(Yy)
+                ALL_YEAR.push(Yy)
+                ALL_MONTH.push(Mm)
             }
         })
         setYears(ALL_YEAR)
+        setMonths(ALL_MONTH)
     }
 
     useEffect(() => {
