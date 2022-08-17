@@ -6,36 +6,48 @@ const ExpenceChart = () => {
 
     const getData = useSelector((state) => state.dataReducer.expencesData)
 
-    const [ getRedux, setGetRedux ] = useState(getData)
-
     const [ year, setYears ] = useState()
+
+    const [ getValue, setGetValue ] = useState({
+        GetYear:""
+    })
 
     const getDate = (item) => {
 
         const ALL_YEAR = []
-
         for (let i = 0; i < item?.length; i++) {
             const element = item[i];
             const finaldate = element.date
             const a = moment(finaldate, "DD-MM-YYYY").format("YYYY")
-            return ALL_YEAR.push(a)
+            if(ALL_YEAR.includes(a)){
+                console.log("True")
+            } else{
+                ALL_YEAR.push(a)
+            }
+            
         }
-        console.log(ALL_YEAR)
         setYears(ALL_YEAR)
     }
 
     useEffect(() => {
         getDate(getData)
-    },[])
+    },[getData])
+
+    const handleChange = (e) => {
+        setGetValue({...getValue, [e.target.name]: e.target.value })
+        console.log(getValue)
+        const FilterData = getData.filter((element,index) => moment(element.date,"DD-MM-YYYY").format("YYYY") === e.target.value)
+        console.log(FilterData)
+    }
 
     return (
         <div className="container">
             <div className="row text-end">
                 <div className="col-12 my-5">
-                    <select name="years" id="years" className='px-3 py-2 text-dark'>
-                        <option value="Select">Select Year</option>
+                    <select name="GetYear" id="years" className='px-3 py-2 text-dark' onChange={(e)=> handleChange(e)}>
+                        <option value="Select Year">Select Year</option>
                         {
-                            year?.map((element,index)=> <option value={element} key={index}>{element}</option>)
+                            year?.map((element,index)=> <option value={element} key={index} name="GetYear" >{element}</option>)
                         }
                     </select>
                 </div>
