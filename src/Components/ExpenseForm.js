@@ -14,8 +14,6 @@ const ExpenseForm = () => {
         date: ""
     }
 
-    const [ count, setCount ] = useState(0)
-
     const [data, setData] = useState(INITIAL_STATE)
 
     const [ dateDetail, setDateDetail ] = useState()
@@ -33,7 +31,6 @@ const ExpenseForm = () => {
     const DATE = moment(date, "YYYY-MM-DD").format("DD-MM-YYYY")
 
     const handleSubmit = (e) => {
-        setCount(count + 1)
         e.preventDefault()
         dispatch(SENDDATA({...data, date:DATE}))
     }
