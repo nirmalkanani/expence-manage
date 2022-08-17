@@ -33,10 +33,12 @@ const ExpenceChart = () => {
             }
         })
 
-        const DataMonth = item?.filter((element,index) => moment(element.date, "DD-MM-YYYY").format("MM") === ALL_MONTH[index])
-        console.log(DataMonth)
         setYears(ALL_YEAR)
         setMonths(ALL_MONTH)
+
+        const DataMonth = item?.filter((element,index) => moment(element.date, "DD-MM-YYYY").format("MM") === ALL_MONTH[index])
+        console.log(DataMonth)
+        
     }
 
 
