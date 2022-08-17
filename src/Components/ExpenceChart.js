@@ -16,6 +16,8 @@ const ExpenceChart = () => {
     })
     // const [ recieveData, setRecieveData ] = useState([])
 
+    const [ total, setTotal ] = useState()
+
     const getDate = (item) => {
 
         const ALL_YEAR = []
@@ -59,8 +61,25 @@ const ExpenceChart = () => {
             months.includes(moment(element.date, "DD-MM-YYYY").format("MM"))
             return OUT_DATA.push(element)
         })
-        console.log(OUT_DATA)
-        console.log(FilterMonth)
+        setDataByMonth(OUT_DATA)
+
+        const GET_AMOUNT = OUT_DATA.map((element) => {
+            return element.amount
+        })
+        console.log(GET_AMOUNT, "amount")
+        
+
+        const a = eval(GET_AMOUNT.toString())
+        console.log(a)
+        
+        const b = Math.max(a)
+        const c = b + ((b * 20) / 100)
+        console.log(c)
+        setTotal(c)
+
+        const com = (a * 100) / c
+        console.log(com)
+
     }
 
     return (
@@ -80,7 +99,7 @@ const ExpenceChart = () => {
                     <div className="bar-chart">
                         <div className="row">
                             <div className="col-1">
-                                <div className="progress " style={{ height: "500px", position: "relative" }}>
+                                <div className="progress " style={{ height: "500px", position: "relative" }} value={total}>
                                     <div className="real-time-progress bg-dark" style={{ height: "250px", width: "100%", position: "absolute", bottom: "0" }}></div>
                                 </div>
                             </div>
