@@ -26,7 +26,6 @@ const ExpenceChart = () => {
             } else{
                 ALL_YEAR.push(a)
             }
-            
         }
         setYears(ALL_YEAR)
     }
