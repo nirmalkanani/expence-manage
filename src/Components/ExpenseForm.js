@@ -1,19 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { SENDDATA } from '../Redux/Actions/Action'
 import { TextField } from '@mui/material'
-import moment from 'moment';
+import { useSelector } from 'react-redux'
+import moment from 'moment'
 
 const ExpenseForm = () => {
 
     const INITIAL_STATE = {
         description: "",
         amount: "",
-        date: "",
+        date: ""
     }
 
+    const [ count, setCount ] = useState(0)
+
     const [data, setData] = useState(INITIAL_STATE)
+
+    const [ dateDetail, setDateDetail ] = useState()
 
     const { description, amount, date } = data
 
@@ -21,12 +26,16 @@ const ExpenseForm = () => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
 
+    const getData = useSelector((state) => state.dataReducer.expencesData)
+
     const dispatch = useDispatch()
 
+    const DATE = moment(date, "YYYY-MM-DD").format("DD-MM-YYYY")
+
     const handleSubmit = (e) => {
+        setCount(count + 1)
         e.preventDefault()
-        console.log(data)
-        dispatch(SENDDATA(data))
+        dispatch(SENDDATA({...data, date:DATE}))
     }
 
     return (

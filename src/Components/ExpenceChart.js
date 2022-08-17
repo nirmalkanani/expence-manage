@@ -1,55 +1,42 @@
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'
 
 const ExpenceChart = () => {
 
     const getData = useSelector((state) => state.dataReducer.expencesData)
-    // console.log(getData[1]?.date.split('-'))
 
     const [ getRedux, setGetRedux ] = useState(getData)
 
-    const INITIAL_DATE = {
-        year:"",
-        month:"",
-        date:""
-    }
+    const [ year, setYears ] = useState()
 
-    const [ initial, setInitial ] = useState(INITIAL_DATE)
+    const getDate = (item) => {
 
-    const free =[]
+        const ALL_YEAR = []
 
-    const All = (data) => {
-        const filterData = data?.map((element,index) => {
-          return console.log(element)
-
-        })
-        for(let i=0; i < data?.length; i++ ){
-            // console.log(data)
-            const a = data[i].date.split('-')
-            free.push(a)
+        for (let i = 0; i < item?.length; i++) {
+            const element = item[i];
+            const finaldate = element.date
+            const a = moment(finaldate, "DD-MM-YYYY").format("YYYY")
+            return ALL_YEAR.push(a)
         }
-        console.log(initial)
-
-        // const CD = free.filter((year) => year === )
+        console.log(ALL_YEAR)
+        setYears(ALL_YEAR)
     }
 
     useEffect(() => {
-        console.log(getRedux)
-        All(getData)
-    },[])
+        getDate(getData)
+    },[getData])
 
     return (
         <div className="container">
-            <div className="row">
-                <div className="col-12">
+            <div className="row text-end">
+                <div className="col-12 my-5">
                     <select name="years" id="years" className='px-3 py-2 text-dark'>
+                        <option value="Select">Select Year</option>
                         {
-                            
+                            year?.map((element,index)=> <option value={element} key={index}>{element}</option>)
                         }
-                        <option value="1"> Select Year </option>
-                        <option value="2">{}</option>
-                        <option value="3"></option>
-                        <option value="4"></option>
                     </select>
                 </div>
             </div>
