@@ -26,7 +26,7 @@ const ExpenceChart = () => {
 
     useEffect(() => {
         getDate(getData)
-    },[getData])
+    },[])
 
     return (
         <div className="container">
