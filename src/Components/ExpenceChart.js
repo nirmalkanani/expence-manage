@@ -40,11 +40,7 @@ const ExpenceChart = () => {
         console.log(DataMonth)
         
     }
-
-
-    const getMonthData = () => {
-        
-    }
+    
     useEffect(() => {
         getDate(getData)
     },[getData])
