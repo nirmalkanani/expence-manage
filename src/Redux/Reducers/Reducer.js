@@ -15,4 +15,4 @@ export const dataReducer = (state = INITIAL_STATE, action) => {
                 return state
     }
 
-}
+}   
