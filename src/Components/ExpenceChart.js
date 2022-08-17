@@ -25,20 +25,24 @@ const ExpenceChart = () => {
             const finaldate = element.date
             const Yy = moment(finaldate, "DD-MM-YYYY").format("YYYY")
             const Mm = moment(finaldate, "DD-MM-YYYY").format("MM")
-            console.log(Mm)
             if(ALL_YEAR.includes(Yy) && ALL_MONTH.includes(Mm)){
-                return console.log("True")
+                return ""
             } else{
                 ALL_YEAR.push(Yy)
                 ALL_MONTH.push(Mm)
             }
-
-            const 
         })
+
+        const DataMonth = item?.filter((element,index) => moment(element.date, "DD-MM-YYYY").format("MM") === ALL_MONTH[index])
+        console.log(DataMonth)
         setYears(ALL_YEAR)
         setMonths(ALL_MONTH)
     }
 
+
+    const getMonthData = () => {
+        
+    }
     useEffect(() => {
         getDate(getData)
     },[getData])
