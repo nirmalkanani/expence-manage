@@ -5,6 +5,7 @@ import { SENDDATA } from '../Redux/Actions/Action'
 import { TextField } from '@mui/material'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
+import { toast } from 'react-toastify'
 
 const ExpenseForm = () => {
 
@@ -31,8 +32,17 @@ const ExpenseForm = () => {
     const DATE = moment(date, "YYYY-MM-DD").format("DD-MM-YYYY")
 
     const handleSubmit = (e) => {
+
+        const CheckData = description && amount && date
+
+        if(!CheckData){
+            toast.error("Please Fill Data")
+        } else{
+            dispatch(SENDDATA({...data, date:DATE}))
+        }
+
         e.preventDefault()
-        dispatch(SENDDATA({...data, date:DATE}))
+        
     }
 
     return (

@@ -17,16 +17,16 @@ const ExpenceChart = () => {
     const getDate = (item) => {
 
         const ALL_YEAR = []
-        for (let i = 0; i < item?.length; i++) {
-            const element = item[i];
+        
+        item?.map((element,index) => {
             const finaldate = element.date
-            const a = moment(finaldate, "DD-MM-YYYY").format("YYYY")
-            if(ALL_YEAR.includes(a)){
-                console.log("True")
+            const Yy = moment(finaldate, "DD-MM-YYYY").format("YYYY")
+            if(ALL_YEAR.includes(Yy)){
+                return console.log("True")
             } else{
-                ALL_YEAR.push(a)
+                return ALL_YEAR.push(Yy)
             }
-        }
+        })
         setYears(ALL_YEAR)
     }
 
@@ -39,8 +39,6 @@ const ExpenceChart = () => {
         console.log(getValue)
         const FilterData = getData.filter((element,index) => moment(element.date,"DD-MM-YYYY").format("YYYY") === e.target.value)
         console.log(FilterData)
-        setRecieveData(FilterData)
-        console.log(recieveData)
     }
 
     return (

@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { store } from './Store';
 import { Provider } from 'react-redux/es/exports';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,5 +16,6 @@ root.render(
         <App />
       </BrowserRouter>
     </Provider>
+    <ToastContainer />
   </>
 );
