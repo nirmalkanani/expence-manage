@@ -35,6 +35,7 @@ const ExpenceChart = () => {
 
         setYears(ALL_YEAR)
         setMonths(ALL_MONTH)
+        console.log(months)
 
         const DataMonth = item?.filter((element,index) => moment(element.date, "DD-MM-YYYY").format("MM") === ALL_MONTH[index])
         console.log(DataMonth)
@@ -48,6 +49,7 @@ const ExpenceChart = () => {
     const handleChange = (e) => {
         setGetValue({...getValue, [e.target.name]: e.target.value })
         const FilterData = getData.filter((element,index) => moment(element.date,"DD-MM-YYYY").format("YYYY") === e.target.value)
+        console.log(FilterData)
         const FilderMonth = FilterData.filter((element)=> moment(element.date, "DD-MM-YYYY").format("MM") === months)
         console.log(FilderMonth)
     }
