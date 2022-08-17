@@ -12,6 +12,8 @@ const ExpenceChart = () => {
         GetYear:""
     })
 
+    const [ recieveData, setRecieveData ] = useState([])
+
     const getDate = (item) => {
 
         const ALL_YEAR = []
@@ -38,6 +40,8 @@ const ExpenceChart = () => {
         console.log(getValue)
         const FilterData = getData.filter((element,index) => moment(element.date,"DD-MM-YYYY").format("YYYY") === e.target.value)
         console.log(FilterData)
+        setRecieveData(FilterData)
+        console.log(recieveData)
     }
 
     return (
