@@ -3,14 +3,14 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { SENDDATA } from '../Redux/Actions/Action'
 import { TextField } from '@mui/material'
-
+import moment from 'moment';
 
 const ExpenseForm = () => {
 
     const INITIAL_STATE = {
         description: "",
         amount: "",
-        date: ""
+        date: "",
     }
 
     const [data, setData] = useState(INITIAL_STATE)
