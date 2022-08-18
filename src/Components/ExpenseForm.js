@@ -85,7 +85,7 @@ const ExpenseForm = () => {
                                     <input type="date" className='w-75 p-3 rounded' onChange={(e) => handleChange(e)} name="date" value={date} />
                                 </div>
                                 <div className="input-gropu-section col-5 my-3 text-end">
-                                    <input type="submit" className=' w-50 p-3 rounded' />
+                                    <input type="submit" className=' w-50 p-3 rounded btn btn-primary' value="Submit"/>
                                 </div>
                             </div>
                         </form>
