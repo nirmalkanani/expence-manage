@@ -39,6 +39,7 @@ const ExpenseForm = () => {
             toast.error("Please Fill Data")
         } else{
             dispatch(SENDDATA({...data, date:DATE}))
+            setData(INITIAL_STATE)
         }
 
         e.preventDefault()
