@@ -17,14 +17,68 @@ const ExpenceChart = () => {
 
     const [amount, setAmount] = useState()
 
-    const [ dbyMonth, setDbyMonth ] = useState([])
-
-    const [ dataFil, setDataFil ] = useState({
-        month:"",
-    })
+    const INITIAL_STATE = [
+        {
+            month:1,
+            data:[]
+        },
+        {
+            month:2,
+            data:[]
+        },
+        {
+            month:3,
+            data:[]
+        },
+        {
+            month:4,
+            data:[]
+        },
+        {
+            month:5,
+            data:[]
+        },
+        {
+            month:6,
+            data:[]
+        },
+        {
+            month:7,
+            data:[]
+        },
+        {
+            month:8,
+            data:[]
+        },
+        {
+            month:9,
+            data:[]
+        },
+        {
+            month:10,
+            data:[]
+        },
+        {
+            month:11,
+            data:[]
+        },
+        {
+            month:12,
+            data:[]
+        },
+    ]
 
     const getDate = (item) => {
 
+        const SET_DATA = item?.map((data,index) => {
+            INITIAL_STATE.map((element) => {
+                if(element.month === data.month){
+                    element.data.push(data)
+                }
+            })
+        })
+
+        console.log(INITIAL_STATE)
         const ALL_YEAR = []
         const ALL_MONTH = []
 

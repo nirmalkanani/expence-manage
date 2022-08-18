@@ -31,7 +31,7 @@ const ExpenseForm = () => {
     const dispatch = useDispatch()
 
     const DATE = moment(date, "YYYY-MM-DD").format("DD-MM-YYYY")
-    const MONTH = moment(date, "YYYY-MM-DD").format("MMMM")
+    const MONTH = moment(date, "YYYY-MM-DD").format("MM")
 
     const handleSubmit = (e) => {
 
@@ -40,7 +40,7 @@ const ExpenseForm = () => {
         if(!CheckData){
             toast.error("Please Fill Data")
         } else{
-            dispatch(SENDDATA({...data, date:DATE, month:MONTH}))
+            dispatch(SENDDATA({...data, date:DATE, month:parseInt(MONTH)}))
             setData(INITIAL_STATE)
         }
 
