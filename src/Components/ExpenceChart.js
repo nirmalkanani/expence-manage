@@ -49,8 +49,6 @@ const ExpenceChart = () => {
         const YEAR = []
 
         const DATE_MONTH = item?.map((element) => {
-
-            // const finaldate = element.date
             
             const MMMM = moment(element.date, "DD-MM-YYYY").format("MM")
             if(!MONTH.includes(MMMM)){
@@ -96,7 +94,19 @@ const ExpenceChart = () => {
         })
 
         console.log(OUT_DATA)
-        
+
+        const D = []
+
+        const Filter = ALL_MONTHS.filter((month,index) => {
+            OUT_DATA.filter((element) => {
+                if(month === moment(element.date, "DD-MM-YYYY").format("MMMM")){
+                    return D.push(element.amount)
+                }
+            })
+        })
+
+        console.log(D)
+
         console.log(ALL_MONTHS)
         setMonths(ALL_MONTHS)
 

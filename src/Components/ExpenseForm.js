@@ -12,7 +12,8 @@ const ExpenseForm = () => {
     const INITIAL_STATE = {
         description: "",
         amount: "",
-        date: ""
+        date: "",
+        month:""
     }
 
     const [data, setData] = useState(INITIAL_STATE)
@@ -22,7 +23,7 @@ const ExpenseForm = () => {
     const { description, amount, date } = data
 
     const handleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value })
+        setData({ ...data ,[e.target.name]: e.target.value })
     }
 
     const getData = useSelector((state) => state.dataReducer.expencesData)
@@ -30,6 +31,7 @@ const ExpenseForm = () => {
     const dispatch = useDispatch()
 
     const DATE = moment(date, "YYYY-MM-DD").format("DD-MM-YYYY")
+    const MONTH = moment(date, "YYYY-MM-DD").format("MMMM")
 
     const handleSubmit = (e) => {
 
@@ -38,7 +40,7 @@ const ExpenseForm = () => {
         if(!CheckData){
             toast.error("Please Fill Data")
         } else{
-            dispatch(SENDDATA({...data, date:DATE}))
+            dispatch(SENDDATA({...data, date:DATE, month:MONTH}))
             setData(INITIAL_STATE)
         }
 
