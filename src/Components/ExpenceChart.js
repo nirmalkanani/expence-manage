@@ -15,17 +15,13 @@ const ExpenceChart = () => {
 
     const [dataByMonths, setDataByMonth] = useState()
 
-    const [getValue, setGetValue] = useState({
-        GetYear: ""
-    })
-
-    const [ getdetail, setGetdetail ] = useState({
-        month:"",
-        year:"",
-        amounts:[]
-    })
-
     const [amount, setAmount] = useState()
+
+    const [ dbyMonth, setDbyMonth ] = useState([])
+
+    const [ dataFil, setDataFil ] = useState({
+        month:"",
+    })
 
     const getDate = (item) => {
 
@@ -34,6 +30,7 @@ const ExpenceChart = () => {
 
         item?.map((element, index) => {
             const finaldate = element.date
+            
             const Yy = moment(finaldate, "DD-MM-YYYY").format("YYYY")
             const Mm = moment(finaldate, "DD-MM-YYYY").format("MM")
             if (ALL_YEAR.includes(Yy)) {
@@ -47,9 +44,29 @@ const ExpenceChart = () => {
                 ALL_MONTH.push(Mm)
             }
         })
+        
+        const MONTH = []
+        const YEAR = []
+
+        const DATE_MONTH = item?.map((element) => {
+
+            // const finaldate = element.date
+            
+            const MMMM = moment(element.date, "DD-MM-YYYY").format("MM")
+            if(!MONTH.includes(MMMM)){
+                MONTH.push(MMMM)
+            }
+            const YYYY = moment(element.date, "DD-MM-YYYY").format("YYYY")
+            if(!YEAR.includes(YYYY)){
+                YEAR.push(YYYY)
+            }
+        })
 
         setYears(ALL_YEAR.sort())
-        setCheckMonths(ALL_MONTH.sort())
+        setCheckMonths(MONTH.sort())
+        console.log(MONTH)
+        console.log(YEAR)
+        console.log(getData)
     }
 
     useEffect(() => {
@@ -58,33 +75,50 @@ const ExpenceChart = () => {
 
     const OUT_DATA = []
     const ALL_MONTHS = []
-    const ALL_DATA = []
+
     const handleChange = (e) => {
-        setGetValue({ ...getValue, [e.target.name]: e.target.value })
-        // Filter Data By Years
+
         const FilterData = getData.filter((element, index) => moment(element.date, "DD-MM-YYYY").format("YYYY") === e.target.value)
 
         const FilterMonth = FilterData.filter((element) => {
 
-            setGetdetail({...getdetail, year:e.target.value, month:moment(element.date,"DD-MM-YYYY").format("MMMM")})
+            const getMonth = moment(element.date, "DD-MM-YYYY").format("MM")
+            console.log(getMonth)
+            
+            if(checkMonths.includes(getMonth)){
+                OUT_DATA.push(element)
+            }
 
-            checkMonths.includes(moment(element.date, "DD-MM-YYYY").format("MM"))
-            OUT_DATA.push(element)
-
-            if (ALL_MONTHS.includes(moment(element.date, "DD-MM-YYYY").format("MMMM"))) {
-                return ""
-            } else {
+            if (!ALL_MONTHS.includes(moment(element.date, "DD-MM-YYYY").format("MMMM"))) {
                 ALL_MONTHS.push(moment(element.date, "DD-MM-YYYY").format("MMMM"))
             }
 
         })
+
+        const DATA =  OUT_DATA.map((element,index) => {
+            setDataFil({...dataFil, month:moment(element.date, "DD-MM-YYYY").format("MMMM")})
+            dbyMonth.push(dataFil)
+        })
+        console.log(DATA)
+        console.log(dbyMonth, "dby")
+        
+        
+
+        console.log(dataFil,"Final OB")
+
+        console.log(OUT_DATA)
+        
+        console.log(ALL_MONTHS)
         setMonths(ALL_MONTHS)
+
+        // Set All Data In State
         setDataByMonth(OUT_DATA)
-        console.log(getdetail)
+
+        // function of Amounts
         AMOUNT_VALUE(OUT_DATA)
     }
-
-    const AMOUNT_VALUE = () => {
+    
+    const AMOUNT_VALUE = (OUT_DATA) => {
 
         const GET_AMOUNT = OUT_DATA.map((element) => {
             return element.amount
@@ -142,4 +176,3 @@ const ExpenceChart = () => {
 }
 
 export default ExpenceChart
-
