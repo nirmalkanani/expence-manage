@@ -55,15 +55,6 @@ const ExpenceChart = () => {
     const OUT_DATA = []
     const ALL_MONTHS = []
 
-    const FIX = {
-        month:"",
-        amount:[]
-    }
-
-    // const [ fix, setFix ] = useState([FIX])
-
-    // const { month } = fix
-
     const handleChange = (e) => {
         setGetValue({ ...getValue, [e.target.name]: e.target.value })
 
@@ -76,12 +67,11 @@ const ExpenceChart = () => {
                 return ""
             } else {
                 ALL_MONTHS.push(moment(element.date, "DD-MM-YYYY").format("MMMM"))
-                FIX.month = moment(element.date, "DD-MM-YYYY").format("MMMM")
             }
         })
         setMonths(ALL_MONTHS)
         setDataByMonth(OUT_DATA)
-        console.log(FIX)
+        
 
         AMOUNT_VALUE(OUT_DATA)
     }
@@ -94,10 +84,8 @@ const ExpenceChart = () => {
 
         const E = GET_AMOUNT.map((element) => {
             const b = eval(element)
-            return FIX.amount.push(b)
+            return b
         })
-        
-        
 
         const b = Math.max(...E)
         const c = b + ((b * 20) / 100)
