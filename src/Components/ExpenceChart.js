@@ -62,9 +62,6 @@ const ExpenceChart = () => {
 
         setYears(ALL_YEAR.sort())
         setCheckMonths(MONTH.sort())
-        console.log(MONTH)
-        console.log(YEAR)
-        console.log(getData)
     }
 
     useEffect(() => {
