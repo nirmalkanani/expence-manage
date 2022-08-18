@@ -55,9 +55,14 @@ const ExpenceChart = () => {
     const OUT_DATA = []
     const ALL_MONTHS = []
 
-    const M ={
-        months:""
+    const FIX = {
+        month:"",
+        amount:[]
     }
+
+    // const [ fix, setFix ] = useState([FIX])
+
+    // const { month } = fix
 
     const handleChange = (e) => {
         setGetValue({ ...getValue, [e.target.name]: e.target.value })
@@ -71,38 +76,39 @@ const ExpenceChart = () => {
                 return ""
             } else {
                 ALL_MONTHS.push(moment(element.date, "DD-MM-YYYY").format("MMMM"))
-                M.months = moment(element.date, "DD-MM-YYYY").format("MMMM")
+                FIX.month = moment(element.date, "DD-MM-YYYY").format("MMMM")
             }
-
         })
-        console.log(M)
         setMonths(ALL_MONTHS)
         setDataByMonth(OUT_DATA)
+        console.log(FIX)
+
+        AMOUNT_VALUE(OUT_DATA)
+    }
+
+    const AMOUNT_VALUE = () => {
 
         const GET_AMOUNT = OUT_DATA.map((element) => {
             return element.amount
         })
 
-        console.log(GET_AMOUNT, "amount")
-
         const E = GET_AMOUNT.map((element) => {
             const b = eval(element)
-            return b
+            return FIX.amount.push(b)
         })
         
+        
+
         const b = Math.max(...E)
-        console.log(b)
         const c = b + ((b * 20) / 100)
-        console.log(c)
         const FINAL_AMOUNT = []
 
         for (let i = 0; i < E.length; i++) {
             const element = (E[i] * 100) / c;
             FINAL_AMOUNT.push(element)
         }
-        console.log(FINAL_AMOUNT)
-        setAmount(FINAL_AMOUNT)
 
+        setAmount(FINAL_AMOUNT)
     }
 
     return (
