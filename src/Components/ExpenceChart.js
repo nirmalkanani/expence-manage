@@ -95,17 +95,6 @@ const ExpenceChart = () => {
 
         })
 
-        const DATA =  OUT_DATA.map((element,index) => {
-            setDataFil({...dataFil, month:moment(element.date, "DD-MM-YYYY").format("MMMM")})
-            dbyMonth.push(dataFil)
-        })
-        console.log(DATA)
-        console.log(dbyMonth, "dby")
-        
-        
-
-        console.log(dataFil,"Final OB")
-
         console.log(OUT_DATA)
         
         console.log(ALL_MONTHS)
