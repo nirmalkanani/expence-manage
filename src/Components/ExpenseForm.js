@@ -70,6 +70,7 @@ const ExpenseForm = () => {
                                         value={description}
                                         onChange={(e) => handleChange(e)}
                                         className='w-100 rounded'
+                                        autoComplete='off'
                                     />
                                 </div>
                                 <div className="input-gropu-section col-3 my-3">
@@ -81,6 +82,7 @@ const ExpenseForm = () => {
                                         value={amount}
                                         onChange={(e) => handleChange(e)}
                                         className='rounded'
+                                        autoComplete='off'
                                     />
                                 </div>
                                 <div className="input-gropu-section col-4 my-3">

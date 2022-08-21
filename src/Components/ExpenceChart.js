@@ -17,68 +17,10 @@ const ExpenceChart = () => {
 
     const [amount, setAmount] = useState()
 
-    const INITIAL_STATE = [
-        {
-            month:1,
-            data:[]
-        },
-        {
-            month:2,
-            data:[]
-        },
-        {
-            month:3,
-            data:[]
-        },
-        {
-            month:4,
-            data:[]
-        },
-        {
-            month:5,
-            data:[]
-        },
-        {
-            month:6,
-            data:[]
-        },
-        {
-            month:7,
-            data:[]
-        },
-        {
-            month:8,
-            data:[]
-        },
-        {
-            month:9,
-            data:[]
-        },
-        {
-            month:10,
-            data:[]
-        },
-        {
-            month:11,
-            data:[]
-        },
-        {
-            month:12,
-            data:[]
-        },
-    ]
+    
 
     const getDate = (item) => {
 
-        const SET_DATA = item?.map((data,index) => {
-            INITIAL_STATE.map((element) => {
-                if(element.month === data.month){
-                    element.data.push(data)
-                }
-            })
-        })
-
-        console.log(INITIAL_STATE)
         const ALL_YEAR = []
         const ALL_MONTH = []
 
@@ -153,8 +95,94 @@ const ExpenceChart = () => {
 
         // function of Amounts
         AMOUNT_VALUE(OUT_DATA)
+
+        FUN_MONTH_DATA(OUT_DATA)
     }
     
+    
+
+    const FUN_MONTH_DATA = (OUT_DATA) => {
+        
+        const INITIAL_STATE = [
+            {
+                month:1,
+                data:[],
+                amount:[]
+            },
+            {
+                month:2,
+                data:[],
+                amount:[]
+            },
+            {
+                month:3,
+                data:[],
+                amount:[]
+            },
+            {
+                month:4,
+                data:[],
+                amount:[]
+            },
+            {
+                month:5,
+                data:[],
+                amount:[]
+            },
+            {
+                month:6,
+                data:[],
+                amount:[]
+            },
+            {
+                month:7,
+                data:[],
+                amount:[]
+            },
+            {
+                month:8,
+                data:[],
+                amount:[]
+            },
+            {
+                month:9,
+                data:[],
+                amount:[]
+            },
+            {
+                month:10,
+                data:[],
+                amount:[]
+            },
+            {
+                month:11,
+                data:[],
+                amount:[]
+            },
+            {
+                month:12,
+                data:[],
+                amount:[]
+            },
+        ]
+
+        const SET_DATA = OUT_DATA?.map((data,index) => {
+            INITIAL_STATE.map((element) => {
+                if(element.month === data.month){
+                    element.data.push(data)
+                }
+            })
+        })
+
+        const Data = INITIAL_STATE.map((data, index) => {
+            const A = data.data.map((element, index) => {
+                data.amount.push(element.amount)   
+            })
+        })
+
+        console.log(INITIAL_STATE)
+    }
+
     const AMOUNT_VALUE = (OUT_DATA) => {
 
         const GET_AMOUNT = OUT_DATA.map((element) => {
