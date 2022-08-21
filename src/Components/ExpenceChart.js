@@ -130,7 +130,7 @@ const ExpenceChart = () => {
         const FilterData = getData.filter((element, index) => moment(element.date, "DD-MM-YYYY").format("YYYY") === e.target.value)
 
         const FilterMonth = FilterData.filter((element) => {
-
+            
             const getMonth = moment(element.date, "DD-MM-YYYY").format("MM")
             console.log(getMonth)
             
@@ -144,21 +144,8 @@ const ExpenceChart = () => {
 
         })
 
-        console.log(OUT_DATA)
+        console.log(OUT_DATA, "OUTDATE")
 
-        const D = []
-
-        const Filter = ALL_MONTHS.filter((month,index) => {
-            OUT_DATA.filter((element) => {
-                if(month === moment(element.date, "DD-MM-YYYY").format("MMMM")){
-                    return D.push(element.amount)
-                }
-            })
-        })
-
-        console.log(D)
-
-        console.log(ALL_MONTHS)
         setMonths(ALL_MONTHS)
 
         // Set All Data In State
