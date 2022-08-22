@@ -79,7 +79,14 @@ const ExpenceChart = () => {
             if (!ALL_MONTHS.includes(moment(element.date, "DD-MM-YYYY").format("MMMM"))) {
                 ALL_MONTHS.push(moment(element.date, "DD-MM-YYYY").format("MMMM"))
             }
+            
         })
+
+        // if(!ALL_MONTHS.includes(moment(new Date().getMonth(), "MM").format("MMMM"))){
+        //     ALL_MONTHS.push(moment(new Date().getMonth(), "MM").format("MMMM"))
+        // }
+
+        console.log(ALL_MONTHS)
 
         setMonths((ALL_MONTHS).sort())
 

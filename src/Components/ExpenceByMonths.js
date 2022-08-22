@@ -2,17 +2,10 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 
 const ExpenceByMonths = (props) => {
-
-    const INITAL_MONTH = {
-        month:""
-    }
-
-    const [ month, setMonth ] = useState(INITAL_MONTH)
+    
     const [ alldata, setAllData ] = useState()  
     
     const handleChange = (e) =>{
-
-        setMonth({...month, [e.target.name] : e.target.value})
 
         const FilterData = props.alldata.filter((element,index) => moment(element.date,"DD-MM-YYYY").format("MMMM") === e.target.value)
         setAllData(FilterData)
@@ -22,7 +15,7 @@ const ExpenceByMonths = (props) => {
         <>
             <div className='row text-end'>
                 <div className="col-12 my-5">
-                    <select name="month" id="month" className='px-3 py-2 text-dark'  onChange={(e) => handleChange(e)}>
+                    <select name="month" id="month" className='px-3 py-2 text-dark' onChange={(e) => handleChange(e)}>
                     <option value="Select Month" >Select Month</option>
                         {
                             props.month?.map((element, index) => <option value={element} key={index} name="GetMonth" >{element}</option>)
