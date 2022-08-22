@@ -92,8 +92,6 @@ const ExpenceChart = () => {
 
         FUN_MONTH_DATA(OUT_DATA)
     }
-    
-    
 
     const FUN_MONTH_DATA = (OUT_DATA) => {
 
@@ -190,12 +188,11 @@ const ExpenceChart = () => {
             })
         })
 
-        
-        setFinalData(INITIAL_STATE)
-
         // function of Amounts
         AMOUNT_VALUE(INITIAL_STATE)
     }
+
+    // Get Amount Value
 
     const AMOUNT_VALUE = (INITIAL_STATE) => {
 
@@ -244,6 +241,7 @@ const ExpenceChart = () => {
                     </div>
                 </div>
             </div>
+            {/* Months Value Pass From Here Via using Props */}
             <ExpenceByMonths year={years} month={months} alldata={dataByMonths} />
         </div>
     )
