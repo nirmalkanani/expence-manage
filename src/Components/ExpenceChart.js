@@ -44,7 +44,7 @@ const ExpenceChart = () => {
         const MONTH = []
         const YEAR = []
 
-        const DATE_MONTH = item?.map((element) => {
+        item?.map((element) => {
             
             const MMMM = moment(element.date, "DD-MM-YYYY").format("MM")
             if(!MONTH.includes(MMMM)){
@@ -71,7 +71,7 @@ const ExpenceChart = () => {
 
         const FilterData = getData.filter((element, index) => moment(element.date, "DD-MM-YYYY").format("YYYY") === e.target.value)
 
-        const FilterMonth = FilterData.filter((element) => {
+        FilterData.filter((element) => {
             
             const getMonth = moment(element.date, "DD-MM-YYYY").format("MM")
             console.log(getMonth)
@@ -79,16 +79,17 @@ const ExpenceChart = () => {
             if(checkMonths.includes(getMonth)){
                 OUT_DATA.push(element)
             }
-
+            
             if (!ALL_MONTHS.includes(moment(element.date, "DD-MM-YYYY").format("MMMM"))) {
                 ALL_MONTHS.push(moment(element.date, "DD-MM-YYYY").format("MMMM"))
             }
 
         })
 
-        console.log(OUT_DATA, "OUTDATE")
+        console.log(OUT_DATA, "OUTDATA")
 
         setMonths(ALL_MONTHS)
+        console.log(ALL_MONTHS)
 
         // Set All Data In State
         setDataByMonth(OUT_DATA)
@@ -107,62 +108,74 @@ const ExpenceChart = () => {
             {
                 month:1,
                 data:[],
-                amount:[]
+                amount:[],
+                total:0
             },
             {
                 month:2,
                 data:[],
-                amount:[]
+                amount:[],
+                total:0
             },
             {
                 month:3,
                 data:[],
-                amount:[]
+                amount:[],
+                total:0
             },
             {
                 month:4,
                 data:[],
-                amount:[]
+                amount:[],
+                total:0
             },
             {
                 month:5,
                 data:[],
-                amount:[]
+                amount:[],
+                total:0
             },
             {
                 month:6,
                 data:[],
-                amount:[]
+                amount:[],
+                total:0
             },
             {
                 month:7,
                 data:[],
-                amount:[]
+                amount:[],
+                total:0
             },
             {
                 month:8,
                 data:[],
-                amount:[]
+                amount:[],
+                total:0
             },
             {
                 month:9,
                 data:[],
-                amount:[]
+                amount:[],
+                total:0
             },
             {
                 month:10,
                 data:[],
-                amount:[]
+                amount:[],
+                total:0
             },
             {
                 month:11,
                 data:[],
-                amount:[]
+                amount:[],
+                total:0
             },
             {
                 month:12,
                 data:[],
-                amount:[]
+                amount:[],
+                total:0
             },
         ]
 
@@ -176,10 +189,13 @@ const ExpenceChart = () => {
 
         const Data = INITIAL_STATE.map((data, index) => {
             const A = data.data.map((element, index) => {
-                data.amount.push(element.amount)   
+                data.amount.push(element.amount)
+
+                for (let i = 0; i < data.amount.length; i++) {
+                    data.total += data.amount[i];
+                }
             })
         })
-
         console.log(INITIAL_STATE)
     }
 
