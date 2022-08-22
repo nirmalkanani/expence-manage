@@ -16,3 +16,13 @@ export const SENDALLDATA = (item) => {
         url:'/expense.json'
     }
 }
+
+export const DELETE = (key) => {
+    return{
+        type:"DELETE_DATA",
+        data:key,
+        isHttpsAction : true,
+        method: 'DELETE',
+        url:'/expense.json'
+    }
+}

@@ -22,19 +22,29 @@ const ExpenceChart = () => {
 
     const [finalData, setFinalData] = useState()
 
+    const [ objKeys, setObjKeys ] = useState()
+
+    const [ objValues, setObjValues ] = useState()
+
     const GET_API_DATA = async() => {
 
         const response = await axios.get('https://expense-tracker-fbcff-default-rtdb.asia-southeast1.firebasedatabase.app/expense.json')
-        const ALL_DATA = Object.values(response.data)
+        const OB_KEYS = Object.keys(response.data)
+        setObjKeys(OB_KEYS)
+        const OB_VALUES = Object.values(response.data)
+        setObjValues(OB_VALUES)
+
+        const ADD = OB_KEYS.map((element, index) => 
+            OB_VALUES[index].key = OB_KEYS[index]
+        )
         
-        setGET_ALLDATA(ALL_DATA)
-        console.log(ALL_DATA)
+        setGET_ALLDATA(OB_VALUES)
 
         const MONTH = []
 
         const YEAR = []
 
-        ALL_DATA?.map((element) => {
+        OB_VALUES?.map((element) => {
 
             const MMMM = moment(element.date, "DD-MM-YYYY").format("MM")
             if (!MONTH.includes(MMMM)) {
@@ -92,6 +102,7 @@ const ExpenceChart = () => {
 
         // Set All Data In State
         setDataByMonth(OUT_DATA)
+        console.log(OUT_DATA)
         
         FUN_MONTH_DATA(OUT_DATA)
     }

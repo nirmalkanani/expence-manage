@@ -1,14 +1,51 @@
+import axios from 'axios'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import { DELETE } from '../Redux/Actions/Action'
+import { useDispatch } from 'react-redux'
 
 const ExpenceByMonths = (props) => {
     
     const [ alldata, setAllData ] = useState()  
+
+    const [ objKeys, setObjKeys ] = useState()
+
+    const [ objValues, setObjValues ] = useState()
     
-    const handleChange = (e) =>{
+    const GETDATA = async () => {
+        const response = await axios.get('https://expense-tracker-fbcff-default-rtdb.asia-southeast1.firebasedatabase.app/expense.json')
+        const OB_KEYS = Object.keys(response.data)
+        setObjKeys(OB_KEYS)
+        const OB_VALUES = Object.values(response.data)
+        setObjValues(OB_VALUES)
+
+        const ADD = OB_KEYS.map((element, index) => 
+            OB_VALUES[index].key = OB_KEYS[index]
+        )
+
+        // console.log(OB_VALUES)
+    }
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        GETDATA()
+    },[])
+
+    const handleChange = (e) =>{   
 
         const FilterData = props.alldata.filter((element,index) => moment(element.date,"DD-MM-YYYY").format("MMMM") === e.target.value)
         setAllData(FilterData)
+    }
+
+    const handleDelete = (key) => {
+        console.log(key)
+        // dispatch(DELETE(key))
+    }
+    
+    const handleEdit = (key)=> {
+        console.log(key)
+        
     }
 
     return (
@@ -37,6 +74,12 @@ const ExpenceByMonths = (props) => {
                                 <div className="col-md-9">
                                     <div className="amount-box border border-2 border-dark rounded mb-3 p-2"><h3>{element.amount}</h3></div>
                                     <div className="decription-box border border-2 border-dark rounded  p-2"><h4>{element.description}</h4></div>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-12 text-end">
+                                    <button className="btn btn-success py-2 px-3 m-3" onClick={(e) => handleEdit(element.key)}>EDIT</button>
+                                    <button className="btn btn-danger py-2 px-3 m-3" onClick={(e) => handleDelete(element.key)}>DELETE</button>
                                 </div>
                             </div>
                         </div>
