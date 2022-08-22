@@ -18,7 +18,7 @@ const ExpenceChart = () => {
     const [amount, setAmount] = useState()
 
     const getDate = (item) => {
-        
+
         const MONTH = []
         const YEAR = []
 
@@ -202,7 +202,7 @@ const ExpenceChart = () => {
             <div className="row text-end">
                 <div className="col-12 my-5">
                     <select name="GetYear" id="years" className='px-3 py-2 text-dark' onChange={(e) => handleChange(e)}>
-                        <option value={years}>Select Year</option>
+                        <option value={new Date().getFullYear()}>Select Year</option>
                         {
                             years?.map((element, index) => <option value={element} key={index} name="GetYear">{element}</option>)
                         }
