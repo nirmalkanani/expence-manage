@@ -17,8 +17,6 @@ const ExpenceChart = () => {
 
     const [amount, setAmount] = useState()
 
-    const [finalData, setFinalData] = useState()
-
     const getDate = (item) => {
 
         const ALL_YEAR = []
@@ -55,8 +53,6 @@ const ExpenceChart = () => {
                 YEAR.push(YYYY)
             }
         })
-
-
 
         setYears(ALL_YEAR.sort())
         setCheckMonths(MONTH.sort())
@@ -221,7 +217,7 @@ const ExpenceChart = () => {
                     <select name="GetYear" id="years" className='px-3 py-2 text-dark' onChange={(e) => handleChange(e)}>
                         <option value={new Date().getFullYear()}>Select Year</option>
                         {
-                               years?.map((element, index) => <option value={element} key={index} name="GetYear">{element}</option>)
+                            years?.map((element, index) => <option value={element} key={index} name="GetYear">{element}</option>)
                         }
                     </select>
                 </div>
@@ -229,17 +225,17 @@ const ExpenceChart = () => {
             <div className="bar-chart">
                 <div className="row">
                     {
-                        years ? amount?.map((element, index) =>
+                        amount?.map((element, index) =>
                             <div className="col-1" key={index}>
                                 <div className="progress " style={{ height: "500px", position: "relative" }} >
                                     <div className="real-time-progress bg-dark rounded" style={{ height: `${element}%`, width: "100%", position: "absolute", bottom: "0" }}></div>
                                 </div>
                             </div>
-                        ) :""
+                        )
                     }
                 </div>
             </div>
-            
+
             {/* Months Value Pass From Here Via using Props */}
             <ExpenceByMonths year={years} month={months} alldata={dataByMonths} />
         </div>
