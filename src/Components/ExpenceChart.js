@@ -74,7 +74,6 @@ const ExpenceChart = () => {
         FilterData.filter((element) => {
             
             const getMonth = moment(element.date, "DD-MM-YYYY").format("MM")
-            console.log(getMonth)
             
             if(checkMonths.includes(getMonth)){
                 OUT_DATA.push(element)
@@ -86,10 +85,7 @@ const ExpenceChart = () => {
 
         })
 
-        console.log(OUT_DATA, "OUTDATA")
-
         setMonths(ALL_MONTHS)
-        console.log(ALL_MONTHS)
 
         // Set All Data In State
         setDataByMonth(OUT_DATA)
@@ -100,7 +96,7 @@ const ExpenceChart = () => {
     
 
     const FUN_MONTH_DATA = (OUT_DATA) => {
-        
+
         const INITIAL_STATE = [
             {
                 month:1,
@@ -196,7 +192,6 @@ const ExpenceChart = () => {
 
         
         setFinalData(INITIAL_STATE)
-        console.log(INITIAL_STATE)
 
         // function of Amounts
         AMOUNT_VALUE(INITIAL_STATE)
@@ -208,12 +203,6 @@ const ExpenceChart = () => {
             return element.total
         })
 
-        console.log(GET_AMOUNT)
-        // const E = GET_AMOUNT.map((element) => {
-        //     const b = eval(element)
-        //     return b
-        // })
-
         const b = Math.max(...GET_AMOUNT)
         const c = b + ((b * 20) / 100)
         const FINAL_AMOUNT = []
@@ -224,7 +213,6 @@ const ExpenceChart = () => {
         }
 
         setAmount(FINAL_AMOUNT)
-        console.log(FINAL_AMOUNT)
     }
 
     return (
