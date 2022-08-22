@@ -58,7 +58,7 @@ const ExpenseForm = () => {
             </div>
             <div className="row">
                 <div className="col-12">
-                    <div className="form-section ">
+                    <div className="form-section border border-2 border-dark p-3" style={{ borderRadius:"20px" }}>
                         <form action="#" method='post' onSubmit={(e) => handleSubmit(e)}>
                             <div className="row">
                                 <div className="input-gropu-section col-12 my-3">
@@ -73,7 +73,7 @@ const ExpenseForm = () => {
                                         autoComplete='off'
                                     />
                                 </div>
-                                <div className="input-gropu-section col-3 my-3">
+                                <div className="input-gropu-section col-12 col-md-3 my-3">
                                     <TextField
                                         type="text"
                                         id="outlined-error"
@@ -81,15 +81,15 @@ const ExpenseForm = () => {
                                         name="amount"
                                         value={amount}
                                         onChange={(e) => handleChange(e)}
-                                        className='rounded'
+                                        className='rounded  w-100 '
                                         autoComplete='off'
                                     />
                                 </div>
-                                <div className="input-gropu-section col-4 my-3">
-                                    <input type="date" className='w-75 p-3 rounded' onChange={(e) => handleChange(e)} name="date" value={date} />
+                                <div className="input-gropu-section col-12 col-md-4  my-3">
+                                    <input type="date" className='w-100 w-md-75  p-3 rounded' onChange={(e) => handleChange(e)} name="date" value={date} />
                                 </div>
-                                <div className="input-gropu-section col-5 my-3 text-end">
-                                    <input type="submit" className=' w-50 p-3 rounded btn btn-primary' value="Submit" />
+                                <div className="input-gropu-section col-12 col-md-5 my-3  text-md-end">
+                                    <input type="submit" className='w-100 w-md-50 p-3 rounded btn btn-primary' value="Submit" />
                                 </div>
                             </div>
                         </form>

@@ -8,22 +8,13 @@ const ExpenceByMonths = (props) => {
     }
 
     const [ month, setMonth ] = useState(INITAL_MONTH)
-    const [ alldata, setAllData ] = useState()
-
-    const data = () => {
-
-    }
-
-    useEffect(() => {
-        data()
-    },[])
-
+    const [ alldata, setAllData ] = useState()  
+    
     const handleChange = (e) =>{
+
         setMonth({...month, [e.target.name] : e.target.value})
-        console.log(month)
 
         const FilterData = props.alldata.filter((element,index) => moment(element.date,"DD-MM-YYYY").format("MMMM") === e.target.value)
-        console.log(FilterData)
         setAllData(FilterData)
     }
 
@@ -31,7 +22,7 @@ const ExpenceByMonths = (props) => {
         <>
             <div className='row text-end'>
                 <div className="col-12 my-5">
-                    <select name="month" id="month" className='px-3 py-2 text-dark' onChange={(e) => handleChange(e)}>
+                    <select name="month" id="month" className='px-3 py-2 text-dark'  onChange={(e) => handleChange(e)}>
                     <option value="Select Month" >Select Month</option>
                         {
                             props.month?.map((element, index) => <option value={element} key={index} name="GetMonth" >{element}</option>)
@@ -39,7 +30,7 @@ const ExpenceByMonths = (props) => {
                     </select>
                 </div>
             </div>
-            <div className="row">
+            <div className="row border border-2 border-dark p-4">
                 {
                     alldata?.map((element,index) => 
                         <div className="col-12 my-4" key={index}>

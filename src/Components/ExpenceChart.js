@@ -17,9 +17,12 @@ const ExpenceChart = () => {
 
     const [amount, setAmount] = useState()
 
+    const [finalData, setFinalData] = useState()
+
     const getDate = (item) => {
 
         const MONTH = []
+
         const YEAR = []
 
         item?.map((element) => {
@@ -34,12 +37,17 @@ const ExpenceChart = () => {
             }
         })
 
+        if (!YEAR.includes(new Date().getFullYear())) {
+            YEAR.push((new Date().getFullYear()).toString())
+        }
+
         setYears(YEAR.sort())
         setCheckMonths(MONTH.sort())
     }
 
     useEffect(() => {
         getDate(getData)
+        AMOUNT_VALUE(INITIAL_STATE)
     }, [getData])
 
     const OUT_DATA = []
@@ -47,7 +55,7 @@ const ExpenceChart = () => {
 
 
     // HandleChange event 
-    
+
     const handleChange = (e) => {
 
         const FilterData = getData.filter((element) => moment(element.date, "DD-MM-YYYY").format("YYYY") === e.target.value)
@@ -63,8 +71,11 @@ const ExpenceChart = () => {
             if (!ALL_MONTHS.includes(moment(element.date, "DD-MM-YYYY").format("MMMM"))) {
                 ALL_MONTHS.push(moment(element.date, "DD-MM-YYYY").format("MMMM"))
             }
-            
         })
+
+        // if(!ALL_MONTHS.includes(moment(new Date().getMonth(), "MM").format("MMMM"))){
+        //     ALL_MONTHS.push(moment(new Date().getMonth(), "MM").format("MMMM"))
+        // }
 
         setMonths(ALL_MONTHS)
 
@@ -74,86 +85,82 @@ const ExpenceChart = () => {
         FUN_MONTH_DATA(OUT_DATA)
     }
 
-
+    const INITIAL_STATE = [
+        {
+            month: 1,
+            data: [],
+            amount: [],
+            total: 0
+        },
+        {
+            month: 2,
+            data: [],
+            amount: [],
+            total: 0
+        },
+        {
+            month: 3,
+            data: [],
+            amount: [],
+            total: 0
+        },
+        {
+            month: 4,
+            data: [],
+            amount: [],
+            total: 0
+        },
+        {
+            month: 5,
+            data: [],
+            amount: [],
+            total: 0
+        },
+        {
+            month: 6,
+            data: [],
+            amount: [],
+            total: 0
+        },
+        {
+            month: 7,
+            data: [],
+            amount: [],
+            total: 0
+        },
+        {
+            month: 8,
+            data: [],
+            amount: [],
+            total: 0
+        },
+        {
+            month: 9,
+            data: [],
+            amount: [],
+            total: 0
+        },
+        {
+            month: 10,
+            data: [],
+            amount: [],
+            total: 0
+        },
+        {
+            month: 11,
+            data: [],
+            amount: [],
+            total: 0
+        },
+        {
+            month: 12,
+            data: [],
+            amount: [],
+            total: 0
+        },
+    ]
 
     const FUN_MONTH_DATA = (OUT_DATA) => {
-
-        // INITIAL STATE FOR NEW STORE DATA
-
-        const INITIAL_STATE = [
-            {
-                month: 1,
-                data: [],
-                amount: [],
-                total: 0
-            },
-            {
-                month: 2,
-                data: [],
-                amount: [],
-                total: 0
-            },
-            {
-                month: 3,
-                data: [],
-                amount: [],
-                total: 0
-            },
-            {
-                month: 4,
-                data: [],
-                amount: [],
-                total: 0
-            },
-            {
-                month: 5,
-                data: [],
-                amount: [],
-                total: 0
-            },
-            {
-                month: 6,
-                data: [],
-                amount: [],
-                total: 0
-            },
-            {
-                month: 7,
-                data: [],
-                amount: [],
-                total: 0
-            },
-            {
-                month: 8,
-                data: [],
-                amount: [],
-                total: 0
-            },
-            {
-                month: 9,
-                data: [],
-                amount: [],
-                total: 0
-            },
-            {
-                month: 10,
-                data: [],
-                amount: [],
-                total: 0
-            },
-            {
-                month: 11,
-                data: [],
-                amount: [],
-                total: 0
-            },
-            {
-                month: 12,
-                data: [],
-                amount: [],
-                total: 0
-            },
-        ]
 
         OUT_DATA?.map((data) => {
             INITIAL_STATE.map((element) => {
@@ -171,16 +178,19 @@ const ExpenceChart = () => {
                     data.total += data.amount[i];
                 }
             })
+            console.log(data.total)
         })
 
         // function of Amounts
         AMOUNT_VALUE(INITIAL_STATE)
+        // console.log(INITIAL_STATE)
+        setFinalData(INITIAL_STATE)
+        console.log(finalData)
     }
 
     // Get Amount Value
 
     const AMOUNT_VALUE = (INITIAL_STATE) => {
-
         const GET_AMOUNT = INITIAL_STATE.map((element) => {
             return element.total
         })
@@ -191,32 +201,43 @@ const ExpenceChart = () => {
 
         for (let i = 0; i < GET_AMOUNT.length; i++) {
             const element = (GET_AMOUNT[i] * 100) / c;
+            INITIAL_STATE[i].range = eval(element)
             FINAL_AMOUNT.push(element)
         }
 
         setAmount(FINAL_AMOUNT)
-    }
 
+    }
     return (
         <div className="container">
             <div className="row text-end">
                 <div className="col-12 my-5">
-                    <select name="GetYear" id="years" className='px-3 py-2 text-dark' onChange={(e) => handleChange(e)}>
-                        <option value={new Date().getFullYear()}>Select Year</option>
+                    <select name="GetYear" id="years" className='px-3 py-2 text-dark' defaultValue={new Date().getFullYear()} onChange={(e) => handleChange(e)}>
                         {
                             years?.map((element, index) => <option value={element} key={index} name="GetYear">{element}</option>)
                         }
                     </select>
                 </div>
             </div>
-            <div className="bar-chart">
+            <div className="bar-chart border border-2 p-5 border-dark" style={{ borderRadius: "40px" }}>
                 <div className="row">
                     {
-                        amount?.map((element, index) =>
-                            <div className="col-1" key={index}>
-                                <div className="progress " style={{ height: "500px", position: "relative" }} >
-                                    <div className="real-time-progress bg-dark rounded" style={{ height: `${element}%`, width: "100%", position: "absolute", bottom: "0" }}></div>
+                        finalData === undefined ? 
+                            amount?.map((element, index) =>
+                                <div className="col-1 px-1 px-md-4" key={index} >
+                                    <div className="progress border border-1 border-dark" style={{ height: "400px", position: "relative" }} >
+                                        <div className="real-time-progress bg-dark rounded progress-bar-striped progress-bar-animated shadow" style={{ height: `${element}%`, width: "100%", position: "absolute", bottom: "0" }}>
+                                        </div>
+                                    </div>
                                 </div>
+                            ) : finalData?.map((element, index) =>
+                            <div className="col-1 px-1 px-md-4" key={index} >
+                                <div className="progress border border-1 border-dark" style={{ height: "400px", position: "relative" }} >
+                                    <div className="real-time-progress bg-dark rounded progress-bar-striped progress-bar-animated shadow" style={{ height: `${element.range}%`, width: "100%", position: "absolute", bottom: "0" }}>
+                                        <h6 className='text-center text-white my-3'>{element.total}</h6>
+                                    </div>
+                                </div>
+                                <h6 className='text-center my-3'>{moment(element.month, "MM").format("MMM")}</h6>
                             </div>
                         )
                     }
