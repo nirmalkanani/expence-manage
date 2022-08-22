@@ -189,7 +189,7 @@ const ExpenceChart = () => {
 
         const Data = INITIAL_STATE.map((data, index) => {
             const A = data.data.map((element, index) => {
-                data.amount.push(element.amount)
+                data.amount.push(eval(element.amount))
 
                 for (let i = 0; i < data.amount.length; i++) {
                     data.total += data.amount[i];
