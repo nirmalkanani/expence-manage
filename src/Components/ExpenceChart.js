@@ -7,7 +7,7 @@ const ExpenceChart = () => {
 
     const getData = useSelector((state) => state.dataReducer.expencesData)
 
-    const [year, setYears] = useState()
+    const [years, setYears] = useState()
 
     const [checkMonths, setCheckMonths] = useState()
 
@@ -17,7 +17,7 @@ const ExpenceChart = () => {
 
     const [amount, setAmount] = useState()
 
-    
+    const [ finalData, setFinalData ] = useState()
 
     const getDate = (item) => {
 
@@ -70,7 +70,7 @@ const ExpenceChart = () => {
     const handleChange = (e) => {
 
         const FilterData = getData.filter((element, index) => moment(element.date, "DD-MM-YYYY").format("YYYY") === e.target.value)
-
+        
         FilterData.filter((element) => {
             
             const getMonth = moment(element.date, "DD-MM-YYYY").format("MM")
@@ -93,9 +93,6 @@ const ExpenceChart = () => {
 
         // Set All Data In State
         setDataByMonth(OUT_DATA)
-
-        // function of Amounts
-        AMOUNT_VALUE(OUT_DATA)
 
         FUN_MONTH_DATA(OUT_DATA)
     }
@@ -179,7 +176,7 @@ const ExpenceChart = () => {
             },
         ]
 
-        const SET_DATA = OUT_DATA?.map((data,index) => {
+        OUT_DATA?.map((data,index) => {
             INITIAL_STATE.map((element) => {
                 if(element.month === data.month){
                     element.data.push(data)
@@ -187,7 +184,7 @@ const ExpenceChart = () => {
             })
         })
 
-        const Data = INITIAL_STATE.map((data, index) => {
+        INITIAL_STATE.map((data, index) => {
             const A = data.data.map((element, index) => {
                 data.amount.push(eval(element.amount))
 
@@ -196,30 +193,38 @@ const ExpenceChart = () => {
                 }
             })
         })
+
+        
+        setFinalData(INITIAL_STATE)
         console.log(INITIAL_STATE)
+
+        // function of Amounts
+        AMOUNT_VALUE(INITIAL_STATE)
     }
 
-    const AMOUNT_VALUE = (OUT_DATA) => {
+    const AMOUNT_VALUE = (INITIAL_STATE) => {
 
-        const GET_AMOUNT = OUT_DATA.map((element) => {
-            return element.amount
+        const GET_AMOUNT = INITIAL_STATE.map((element) => {
+            return element.total
         })
 
-        const E = GET_AMOUNT.map((element) => {
-            const b = eval(element)
-            return b
-        })
+        console.log(GET_AMOUNT)
+        // const E = GET_AMOUNT.map((element) => {
+        //     const b = eval(element)
+        //     return b
+        // })
 
-        const b = Math.max(...E)
+        const b = Math.max(...GET_AMOUNT)
         const c = b + ((b * 20) / 100)
         const FINAL_AMOUNT = []
 
-        for (let i = 0; i < E.length; i++) {
-            const element = (E[i] * 100) / c;
+        for (let i = 0; i < GET_AMOUNT.length; i++) {
+            const element = (GET_AMOUNT[i] * 100) / c;
             FINAL_AMOUNT.push(element)
         }
 
         setAmount(FINAL_AMOUNT)
+        console.log(FINAL_AMOUNT)
     }
 
     return (
@@ -229,7 +234,7 @@ const ExpenceChart = () => {
                     <select name="GetYear" id="years" className='px-3 py-2 text-dark' onChange={(e) => handleChange(e)}>
                         <option value="Select Year">Select Year</option>
                         {
-                            year?.map((element, index) => <option value={element} key={index} name="GetYear" >{element}</option>)
+                            years?.map((element, index) => <option value={element} key={index} name="GetYear" >{element}</option>)
                         }
                     </select>
                 </div>
@@ -251,7 +256,7 @@ const ExpenceChart = () => {
                     </div>
                 </div>
             </div>
-            <ExpenceByMonths year={year} month={months} alldata={dataByMonths} />
+            <ExpenceByMonths year={years} month={months} alldata={dataByMonths} />
         </div>
     )
 }
