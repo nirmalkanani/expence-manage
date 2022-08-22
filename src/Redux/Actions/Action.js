@@ -16,5 +16,3 @@ export const SENDALLDATA = (item) => {
         url:'/expense.json'
     }
 }
-
-// base : https://expense-tracker-fbcff-default-rtdb.asia-southeast1.firebasedatabase.app/
