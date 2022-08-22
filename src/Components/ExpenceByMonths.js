@@ -35,13 +35,13 @@ const ExpenceByMonths = (props) => {
                     alldata?.map((element,index) => 
                         <div className="col-12 my-4" key={index}>
                             <div className="row border border-2 border-dark rounded p-3 align-items-center">
-                                <div className="col-3">
+                                <div className="col-md-3">
                                     <div className="date-box text-center border border-1 border-dark rounded p-3">
                                         <h2 className='text-dark'>{moment(element.date, "DD-MM-YYYY").format("DD")}</h2>
                                         <h4>{ moment(element.date, "DD-MM-YYYY").format("MMMM") }</h4>
                                     </div>
                                 </div>
-                                <div className="col-9">
+                                <div className="col-md-9">
                                     <div className="amount-box border border-2 border-dark rounded mb-3 p-2"><h3>{element.amount}</h3></div>
                                     <div className="decription-box border border-2 border-dark rounded  p-2"><h4>{element.description}</h4></div>
                                 </div>

@@ -1,11 +1,14 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'
+import axios from 'axios'
 import ExpenceByMonths from './ExpenceByMonths';
 
 const ExpenceChart = () => {
 
     const getData = useSelector((state) => state.dataReducer.expencesData)
+
+    const [ GET_ALLDATA, setGET_ALLDATA ] = useState()
 
     const [years, setYears] = useState()
 
@@ -19,13 +22,19 @@ const ExpenceChart = () => {
 
     const [finalData, setFinalData] = useState()
 
-    const getDate = (item) => {
+    const GET_API_DATA = async() => {
+
+        const response = await axios.get('https://expense-tracker-fbcff-default-rtdb.asia-southeast1.firebasedatabase.app/expense.json')
+        const ALL_DATA = Object.values(response.data)
+        
+        setGET_ALLDATA(ALL_DATA)
+        console.log(ALL_DATA)
 
         const MONTH = []
 
         const YEAR = []
 
-        item?.map((element) => {
+        ALL_DATA?.map((element) => {
 
             const MMMM = moment(element.date, "DD-MM-YYYY").format("MM")
             if (!MONTH.includes(MMMM)) {
@@ -43,22 +52,20 @@ const ExpenceChart = () => {
 
         setYears(YEAR.sort())
         setCheckMonths(MONTH.sort())
+
     }
 
     useEffect(() => {
-        getDate(getData)
+        GET_API_DATA()
         AMOUNT_VALUE(INITIAL_STATE)
-    }, [getData])
+    }, [dataByMonths])
 
     const OUT_DATA = []
     const ALL_MONTHS = []
-
-
-    // HandleChange event 
-
+    
     const handleChange = (e) => {
 
-        const FilterData = getData.filter((element) => moment(element.date, "DD-MM-YYYY").format("YYYY") === e.target.value)
+        const FilterData = GET_ALLDATA.filter((element) => moment(element.date, "DD-MM-YYYY").format("YYYY") === e.target.value)
 
         FilterData.filter((element) => {
 
@@ -73,15 +80,11 @@ const ExpenceChart = () => {
             }
         })
 
-        // if(!ALL_MONTHS.includes(moment(new Date().getMonth(), "MM").format("MMMM"))){
-        //     ALL_MONTHS.push(moment(new Date().getMonth(), "MM").format("MMMM"))
-        // }
-
-        setMonths(ALL_MONTHS)
+        setMonths((ALL_MONTHS).sort())
 
         // Set All Data In State
         setDataByMonth(OUT_DATA)
-
+        
         FUN_MONTH_DATA(OUT_DATA)
     }
 
@@ -180,10 +183,7 @@ const ExpenceChart = () => {
             })
             console.log(data.total)
         })
-
-        // function of Amounts
         AMOUNT_VALUE(INITIAL_STATE)
-        // console.log(INITIAL_STATE)
         setFinalData(INITIAL_STATE)
         console.log(finalData)
     }

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { SENDDATA } from '../Redux/Actions/Action'
+import { SENDDATA, SENDALLDATA } from '../Redux/Actions/Action'
 import { TextField } from '@mui/material'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
@@ -42,7 +42,7 @@ const ExpenseForm = () => {
         } else if (!/[0-9]/g.test(amount)) {
             toast.error("Please Eter Only Numbers")
         } else {
-            dispatch(SENDDATA({ ...data, date: DATE, month: parseInt(MONTH) }))
+            dispatch(SENDALLDATA(JSON.stringify({ ...data, date: DATE, month: parseInt(MONTH) })))
             setData(INITIAL_STATE)
         }
         e.preventDefault()
