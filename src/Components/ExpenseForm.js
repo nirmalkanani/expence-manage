@@ -84,7 +84,6 @@ const ExpenseForm = () => {
                                         className='rounded'
                                         autoComplete='off'
                                     />
-                                    {/* { !/[0-9]/g.test(amount) ? "error" : "" } */}
                                 </div>
                                 <div className="input-gropu-section col-4 my-3">
                                     <input type="date" className='w-75 p-3 rounded' onChange={(e) => handleChange(e)} name="date" value={date} />

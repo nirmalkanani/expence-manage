@@ -17,6 +17,8 @@ const ExpenceChart = () => {
 
     const [amount, setAmount] = useState()
 
+    const [defaultV, setDefaultV] = useState(false)
+
     const getDate = (item) => {
 
         const ALL_YEAR = []
@@ -91,7 +93,11 @@ const ExpenceChart = () => {
         FUN_MONTH_DATA(OUT_DATA)
     }
 
+
+
     const FUN_MONTH_DATA = (OUT_DATA) => {
+
+        // INITIAL STATE FOR NEW STORE DATA
 
         const INITIAL_STATE = [
             {
@@ -215,7 +221,7 @@ const ExpenceChart = () => {
             <div className="row text-end">
                 <div className="col-12 my-5">
                     <select name="GetYear" id="years" className='px-3 py-2 text-dark' onChange={(e) => handleChange(e)}>
-                        <option value={new Date().getFullYear()}>Select Year</option>
+                        <option value={years}>Select Year</option>
                         {
                             years?.map((element, index) => <option value={element} key={index} name="GetYear">{element}</option>)
                         }
