@@ -17,30 +17,8 @@ const ExpenceChart = () => {
 
     const [amount, setAmount] = useState()
 
-    const [defaultV, setDefaultV] = useState(false)
-
     const getDate = (item) => {
-
-        const ALL_YEAR = []
-        const ALL_MONTH = []
-
-        item?.map((element, index) => {
-            const finaldate = element.date
-
-            const Yy = moment(finaldate, "DD-MM-YYYY").format("YYYY")
-            const Mm = moment(finaldate, "DD-MM-YYYY").format("MM")
-            if (ALL_YEAR.includes(Yy)) {
-                return ""
-            } else {
-                ALL_YEAR.push(Yy)
-            }
-            if (ALL_MONTH.includes(Mm)) {
-                return ""
-            } else {
-                ALL_MONTH.push(Mm)
-            }
-        })
-
+        
         const MONTH = []
         const YEAR = []
 
@@ -56,7 +34,7 @@ const ExpenceChart = () => {
             }
         })
 
-        setYears(ALL_YEAR.sort())
+        setYears(YEAR.sort())
         setCheckMonths(MONTH.sort())
     }
 
@@ -67,6 +45,9 @@ const ExpenceChart = () => {
     const OUT_DATA = []
     const ALL_MONTHS = []
 
+
+    // HandleChange event 
+    
     const handleChange = (e) => {
 
         const FilterData = getData.filter((element) => moment(element.date, "DD-MM-YYYY").format("YYYY") === e.target.value)
@@ -82,7 +63,7 @@ const ExpenceChart = () => {
             if (!ALL_MONTHS.includes(moment(element.date, "DD-MM-YYYY").format("MMMM"))) {
                 ALL_MONTHS.push(moment(element.date, "DD-MM-YYYY").format("MMMM"))
             }
-
+            
         })
 
         setMonths(ALL_MONTHS)
