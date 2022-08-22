@@ -58,12 +58,13 @@ const ExpenceChart = () => {
     useEffect(() => {
         GET_API_DATA()
         AMOUNT_VALUE(INITIAL_STATE)
-    }, [dataByMonths])
+    }, [finalData])
 
     const OUT_DATA = []
     const ALL_MONTHS = []
     
     const handleChange = (e) => {
+        GET_API_DATA()
 
         const FilterData = GET_ALLDATA.filter((element) => moment(element.date, "DD-MM-YYYY").format("YYYY") === e.target.value)
 
@@ -181,11 +182,9 @@ const ExpenceChart = () => {
                     data.total += data.amount[i];
                 }
             })
-            console.log(data.total)
         })
         AMOUNT_VALUE(INITIAL_STATE)
         setFinalData(INITIAL_STATE)
-        console.log(finalData)
     }
 
     // Get Amount Value
