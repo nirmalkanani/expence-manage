@@ -26,6 +26,11 @@ const ExpenceByMonths = (props) => {
         // console.log(OB_VALUES)
     }
 
+    const [ editData, setEditData ] = useState({
+        amount:'',
+        description:''
+    })
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -44,13 +49,36 @@ const ExpenceByMonths = (props) => {
         dispatch(DELETE(key))
     }
 
-    const handleEdit = (key) => {
+    // const AMOUNT_VALUE = {}
+    // const DES_VALUE = {}
 
-        console.log(key)
+    const handleEditData = (e, key) => {
 
-        const A = props.alldata.filter((element, index) => element.key === key)
-        console.log(A)
-        // dispatch(EDITDATA(key))
+        const A = props.alldata.find((element, index) => element.key === key)
+        setEditData(A)
+        setEditData({...editData ,[e.target.name] : e.target.value })
+        console.log(editData, "EDIT STATE")
+        
+    }
+
+    const handleEdit = async (key) => {
+
+
+        const UPDATE_DATA = props.alldata.find((element, index) => element.key === key)
+
+        const DataKey = UPDATE_DATA.key
+
+        UPDATE_DATA.amount = editData.amount
+        UPDATE_DATA.description = editData.description
+
+        delete UPDATE_DATA.key;
+        console.log(UPDATE_DATA)
+
+        await axios.patch(`https://expense-tracker-fbcff-default-rtdb.asia-southeast1.firebasedatabase.app/expense/${DataKey}.json`, UPDATE_DATA)
+
+        
+        // console.log(DataKey)
+        // dispatch(EDITDATA(UPDATE_DATA, DataKey))
     }
 
     return (
@@ -79,10 +107,10 @@ const ExpenceByMonths = (props) => {
                                 <div className="col-md-9">
                                     <form>
                                         <div>
-                                            <input type='text' className="amount-box border border-2 border-dark rounded mb-3 p-2" value={element.amount} />
+                                            <input type='text' className="amount-box border border-2 border-dark rounded mb-3 p-2" name='amount' defaultValue={element.amount} onChange={(e) => handleEditData(e, element.key)}/>
                                         </div>
                                         <div>
-                                            <input type='text' className="decription-box border border-2 border-dark rounded  p-2" value={element.description} />
+                                            <input type='text' className="decription-box border border-2 border-dark rounded  p-2" name='description' defaultValue={element.description} onChange={(e) => handleEditData(e)}/>
                                         </div>
                                     </form>
                                 </div>

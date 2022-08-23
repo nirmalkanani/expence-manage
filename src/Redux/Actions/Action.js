@@ -27,10 +27,11 @@ export const DELETE = (key) => {
     }
 }
 
-export const EDITDATA = (key) => {
+export const EDITDATA = (UPDATE_DATA, key) => {
+    console.log(UPDATE_DATA)
     return{
         type:EDIT_DATA,
-        data:key,
+        data:UPDATE_DATA,
         isHttpsAction : true,
         method: 'PATCH',
         url:`/expense/${key}.json`
