@@ -22,63 +22,68 @@ const ExpenceByMonths = (props) => {
         const ADD = OB_KEYS.map((element, index) =>
             OB_VALUES[index].key = OB_KEYS[index]
         )
-
-        // console.log(OB_VALUES)
     }
 
-    const [ editData, setEditData ] = useState({
-        amount:'',
-        description:''
+    const [editData, setEditData] = useState({
+        amount: '',
+        description: ''
     })
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         GETDATA()
-    }, [])
+    }, [editData,])
 
     const handleChange = (e) => {
 
-        const FilterData = props.alldata.filter((element, index) => moment(element.date, "DD-MM-YYYY").format("MMMM") === e.target.value)
+        const FilterData = objValues?.filter((element) => moment(element.date, "DD-MM-YYYY").format("MMMM") === e.target.value)
         setAllData(FilterData)
+        console.log(FilterData)
     }
 
     const handleDelete = (key) => {
-        console.log(key)
-
         dispatch(DELETE(key))
+        console.log(key)
     }
-
-    // const AMOUNT_VALUE = {}
-    // const DES_VALUE = {}
 
     const handleEditData = (e, key) => {
 
         const A = props.alldata.find((element, index) => element.key === key)
         setEditData(A)
-        setEditData({...editData ,[e.target.name] : e.target.value })
-        console.log(editData, "EDIT STATE")
-        
+        setEditData({ ...editData, [e.target.name]: e.target.value })
+
     }
 
+    const [display, setDisplay] = useState(false)
+
     const handleEdit = async (key) => {
+        setDisplay(true)
+    }
 
-
+    const handleSubmit = (e,key) => {
+        setDisplay(true)
         const UPDATE_DATA = props.alldata.find((element, index) => element.key === key)
 
         const DataKey = UPDATE_DATA.key
 
-        UPDATE_DATA.amount = editData.amount
-        UPDATE_DATA.description = editData.description
+        if (editData.amount == '') {
+            editData.amount = UPDATE_DATA.amount
+        } else {
+            UPDATE_DATA.amount = editData.amount
+        }
+
+        if (editData.description == '') {
+            editData.description = UPDATE_DATA.description
+        } else {
+            UPDATE_DATA.description = editData.description
+        }
 
         delete UPDATE_DATA.key;
         console.log(UPDATE_DATA)
 
-        await axios.patch(`https://expense-tracker-fbcff-default-rtdb.asia-southeast1.firebasedatabase.app/expense/${DataKey}.json`, UPDATE_DATA)
-
+        dispatch(EDITDATA(UPDATE_DATA, DataKey))
         
-        // console.log(DataKey)
-        // dispatch(EDITDATA(UPDATE_DATA, DataKey))
     }
 
     return (
@@ -105,14 +110,27 @@ const ExpenceByMonths = (props) => {
                                     </div>
                                 </div>
                                 <div className="col-md-9">
-                                    <form>
-                                        <div>
-                                            <input type='text' className="amount-box border border-2 border-dark rounded mb-3 p-2" name='amount' defaultValue={element.amount} onChange={(e) => handleEditData(e, element.key)}/>
-                                        </div>
-                                        <div>
-                                            <input type='text' className="decription-box border border-2 border-dark rounded  p-2" name='description' defaultValue={element.description} onChange={(e) => handleEditData(e)}/>
-                                        </div>
-                                    </form>
+                                    {
+                                        !display ? <>
+                                            <div className="amount-box border border-2 border-dark rounded mb-3 p-2"><h3>{element.amount}</h3></div>
+                                            <div className="amount-box border border-2 border-dark rounded mb-3 p-2"><h3>{element.description}</h3></div>
+                                        </> :
+                                            <form >
+                                                <div className="row align-items-center">
+                                                    <div className="col-10">
+                                                        <div>
+                                                            <input type='text' className="amount-box border border-2 border-dark rounded mb-3 p-2 w-100" name='amount' defaultValue={element.amount} value={element.value} onChange={(e) => handleEditData(e, element.key)} />
+                                                        </div>
+                                                        <div>
+                                                            <input type='text' className="decription-box border border-2 border-dark rounded  p-2 w-100" name='description' defaultValue={element.description} onChange={(e) => handleEditData(e, element.key)} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-2 text-end">
+                                                        <button className='btn btn-primary px-3 py-2' onClick={(e) => handleSubmit(e, element.key)}> Save </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                    }
                                 </div>
                             </div>
                             <div className="row">

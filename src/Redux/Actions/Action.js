@@ -33,7 +33,7 @@ export const EDITDATA = (UPDATE_DATA, key) => {
         type:EDIT_DATA,
         data:UPDATE_DATA,
         isHttpsAction : true,
-        method: 'PATCH',
+        method: 'PUT',
         url:`/expense/${key}.json`
     }
 }
