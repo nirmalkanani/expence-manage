@@ -1,7 +1,7 @@
 import axios from 'axios'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import { DELETE } from '../Redux/Actions/Action'
+import { DELETE, EDITDATA } from '../Redux/Actions/Action'
 import { useDispatch } from 'react-redux'
 
 const ExpenceByMonths = (props) => {
@@ -40,12 +40,12 @@ const ExpenceByMonths = (props) => {
 
     const handleDelete = (key) => {
         console.log(key)
-        // dispatch(DELETE(key))
+        dispatch(DELETE(key))
     }
     
     const handleEdit = (key)=> {
         console.log(key)
-        
+        dispatch(EDITDATA(key))
     }
 
     return (

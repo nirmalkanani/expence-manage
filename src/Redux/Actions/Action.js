@@ -1,4 +1,4 @@
-import { SEND_DATA } from "./Constant"
+import { SEND_DATA, SEND_ALLDATA, DELETE_DATA, EDIT_DATA } from "./Constant"
 
 export const SENDDATA = (item) => {
     return{
@@ -9,7 +9,7 @@ export const SENDDATA = (item) => {
 
 export const SENDALLDATA = (item) => {
     return{
-        type:"ADD_ALLDATA",
+        type:SEND_ALLDATA,
         data:item,
         isHttpsAction : true,
         method: 'POST',
@@ -18,11 +18,22 @@ export const SENDALLDATA = (item) => {
 }
 
 export const DELETE = (key) => {
+    console.log(key)
     return{
-        type:"DELETE_DATA",
+        type:DELETE_DATA,
         data:key,
         isHttpsAction : true,
         method: 'DELETE',
-        url:'/expense.json'
+        url:`/expense.json`
+    }
+}
+
+export const EDITDATA = (key) => {
+    return{
+        type:EDIT_DATA,
+        data:key,
+        isHttpsAction : true,
+        method: 'PATCH',
+        url:`/expense.json`
     }
 }
