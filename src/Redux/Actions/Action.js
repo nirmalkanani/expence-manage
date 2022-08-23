@@ -18,13 +18,12 @@ export const SENDALLDATA = (item) => {
 }
 
 export const DELETE = (key) => {
-    console.log(key)
     return{
         type:DELETE_DATA,
         data:key,
         isHttpsAction : true,
         method: 'DELETE',
-        url:`/expense.json`
+        url:`/expense/${key}.json`
     }
 }
 
@@ -34,6 +33,6 @@ export const EDITDATA = (key) => {
         data:key,
         isHttpsAction : true,
         method: 'PATCH',
-        url:`/expense.json`
+        url:`/expense/${key}.json`
     }
 }

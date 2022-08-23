@@ -40,12 +40,13 @@ const ExpenceByMonths = (props) => {
 
     const handleDelete = (key) => {
         console.log(key)
+        
         dispatch(DELETE(key))
     }
     
     const handleEdit = (key)=> {
         console.log(key)
-        dispatch(EDITDATA(key))
+        // dispatch(EDITDATA(key))
     }
 
     return (

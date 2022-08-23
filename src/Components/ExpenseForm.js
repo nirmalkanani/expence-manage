@@ -18,8 +18,6 @@ const ExpenseForm = () => {
 
     const [data, setData] = useState(INITIAL_STATE)
 
-    const [dateDetail, setDateDetail] = useState()
-
     const { description, amount, date } = data
 
     const handleChange = (e) => {
