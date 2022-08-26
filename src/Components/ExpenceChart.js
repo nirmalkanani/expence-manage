@@ -63,6 +63,8 @@ const ExpenceChart = () => {
         setYears(YEAR.sort())
         setCheckMonths(MONTH.sort())
 
+        GET_API_DATA()
+
     }
 
     useEffect(() => {
@@ -262,7 +264,7 @@ const ExpenceChart = () => {
             </div>
 
             {/* Months Value Pass From Here Via using Props */}
-            <ExpenceByMonths year={years} month={months} alldata={dataByMonths} />
+            <ExpenceByMonths year={years} month={months} alldata={dataByMonths}/>
         </div>
     )
 }

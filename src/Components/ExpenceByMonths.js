@@ -22,6 +22,8 @@ const ExpenceByMonths = (props) => {
         const ADD = OB_KEYS.map((element, index) =>
             OB_VALUES[index].key = OB_KEYS[index]
         )
+
+        GETDATA()
     }
 
     const [editData, setEditData] = useState({
