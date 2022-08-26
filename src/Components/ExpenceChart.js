@@ -255,7 +255,6 @@ const ExpenceChart = () => {
                     }
                 </div>
             </div>
-
             {/* Months Value Pass From Here Via using Props */}
             <ExpenceByMonths year={years} month={months} alldata={dataByMonths}/>
         </div>
