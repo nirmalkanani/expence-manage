@@ -22,7 +22,6 @@ const ExpenceByMonths = (props) => {
         const ADD = OB_KEYS.map((element, index) =>
             OB_VALUES[index].key = OB_KEYS[index]
         )
-
         GETDATA()
     }
 
@@ -35,10 +34,10 @@ const ExpenceByMonths = (props) => {
 
     useEffect(() => {
         GETDATA()
-    }, [editData,])
+        handleDelete()
+    }, [editData])
 
     const handleChange = (e) => {
-
         const FilterData = objValues?.filter((element) => moment(element.date, "DD-MM-YYYY").format("MMMM") === e.target.value)
         setAllData(FilterData)
         console.log(FilterData)
@@ -46,11 +45,10 @@ const ExpenceByMonths = (props) => {
 
     const handleDelete = (key) => {
         dispatch(DELETE(key))
-        console.log(key)
+        GETDATA()
     }
 
     const handleEditData = (e, key) => {
-
         const A = props.alldata.find((element, index) => element.key === key)
         setEditData(A)
         setEditData({ ...editData, [e.target.name]: e.target.value })
@@ -93,7 +91,7 @@ const ExpenceByMonths = (props) => {
             <div className='row text-end'>
                 <div className="col-12 my-5">
                     <select name="month" id="month" className='px-3 py-2 text-dark' onChange={(e) => handleChange(e)}>
-                        <option value="Select Month" >Select Month</option>
+                        <option value="Select Month">Select Month</option>
                         {
                             props.month?.map((element, index) => <option value={element} key={index} name="GetMonth" >{element}</option>)
                         }

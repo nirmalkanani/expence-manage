@@ -56,10 +56,6 @@ const ExpenceChart = () => {
             }
         })
 
-        if (!YEAR.includes(new Date().getFullYear())) {
-            YEAR.push((new Date().getFullYear()).toString())
-        }
-
         setYears(YEAR.sort())
         setCheckMonths(MONTH.sort())
 
@@ -93,10 +89,6 @@ const ExpenceChart = () => {
             }
             
         })
-
-        // if(!ALL_MONTHS.includes(moment(new Date().getMonth(), "MM").format("MMMM"))){
-        //     ALL_MONTHS.push(moment(new Date().getMonth(), "MM").format("MMMM"))
-        // }
 
         console.log(ALL_MONTHS)
 
@@ -231,7 +223,8 @@ const ExpenceChart = () => {
         <div className="container">
             <div className="row text-end">
                 <div className="col-12 my-5">
-                    <select name="GetYear" id="years" className='px-3 py-2 text-dark' defaultValue={new Date().getFullYear()} onChange={(e) => handleChange(e)}>
+                    <select name="GetYear" id="years" className='px-3 py-2 text-dark' onChange={(e) => handleChange(e)}>
+                        <option value="Select Year">Select Year</option>
                         {
                             years?.map((element, index) => <option value={element} key={index} name="GetYear">{element}</option>)
                         }
