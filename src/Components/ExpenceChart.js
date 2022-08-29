@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import ExpenceByMonths from './ExpenceByMonths';
 
-const ExpenceChart = () => {
+const ExpenceChart = (props) => {
 
     const getData = useSelector((state) => state.dataReducer.expencesData)
 
@@ -22,17 +22,11 @@ const ExpenceChart = () => {
 
     const [finalData, setFinalData] = useState()
 
-    const [ objKeys, setObjKeys ] = useState()
-
-    const [ objValues, setObjValues ] = useState()
-
     const GET_API_DATA = async() => {
 
         const response = await axios.get('https://expense-tracker-fbcff-default-rtdb.asia-southeast1.firebasedatabase.app/expense.json')
         const OB_KEYS = Object.keys(response.data)
-        setObjKeys(OB_KEYS)
         const OB_VALUES = Object.values(response.data)
-        setObjValues(OB_VALUES)
 
         const ADD = OB_KEYS.map((element, index) => 
             OB_VALUES[index].key = OB_KEYS[index]
@@ -55,49 +49,48 @@ const ExpenceChart = () => {
                 YEAR.push(YYYY)
             }
         })
-
         setYears(YEAR.sort())
         setCheckMonths(MONTH.sort())
-
         GET_API_DATA()
-
     }
 
     useEffect(() => {
-        GET_API_DATA()
+        (async () => {
+            await  GET_API_DATA()
+            await CheckFunction()
+        })()
         AMOUNT_VALUE(INITIAL_STATE)
-    }, [finalData])
+    }, [props.proState])
 
     const OUT_DATA = []
     const ALL_MONTHS = []
-    
-    const handleChange = (e) => {
-        GET_API_DATA()
 
-        const FilterData = GET_ALLDATA.filter((element) => moment(element.date, "DD-MM-YYYY").format("YYYY") === e.target.value)
+    const handleChange = async (e) => {
+        await GET_API_DATA()
+        const FilterData = GET_ALLDATA?.filter((element) => moment(element.date, "DD-MM-YYYY").format("YYYY") == e?.target?.value)
+        FILTER_DATA(FilterData)
+    }
 
-        FilterData.filter((element) => {
+    const CheckFunction = () => {
+        if(handleChange()){
+            const blank = GET_ALLDATA?.filter((element) => moment(element.date, "DD-MM-YYYY").format("YYYY") == new Date().getFullYear())
+            console.log(blank)
+            FILTER_DATA(blank)
+        }
+    }
 
+    const FILTER_DATA = (accpetedData) => {
+        accpetedData?.filter((element) => {
             const getMonth = moment(element.date, "DD-MM-YYYY").format("MM")
-
             if (checkMonths.includes(getMonth)) {
                 OUT_DATA.push(element)
             }
-
             if (!ALL_MONTHS.includes(moment(element.date, "DD-MM-YYYY").format("MMMM"))) {
                 ALL_MONTHS.push(moment(element.date, "DD-MM-YYYY").format("MMMM"))
             }
-            
         })
-
-        console.log(ALL_MONTHS)
-
         setMonths((ALL_MONTHS).sort())
-
-        // Set All Data In State
         setDataByMonth(OUT_DATA)
-        console.log(OUT_DATA)
-        
         FUN_MONTH_DATA(OUT_DATA)
     }
 
@@ -177,7 +170,6 @@ const ExpenceChart = () => {
     ]
 
     const FUN_MONTH_DATA = (OUT_DATA) => {
-
         OUT_DATA?.map((data) => {
             INITIAL_STATE.map((element) => {
                 if (element.month === data.month) {
@@ -195,6 +187,7 @@ const ExpenceChart = () => {
                 }
             })
         })
+
         AMOUNT_VALUE(INITIAL_STATE)
         setFinalData(INITIAL_STATE)
     }
@@ -215,18 +208,18 @@ const ExpenceChart = () => {
             INITIAL_STATE[i].range = eval(element)
             FINAL_AMOUNT.push(element)
         }
-
         setAmount(FINAL_AMOUNT)
-
     }
+
+
+
     return (
         <div className="container">
             <div className="row text-end">
                 <div className="col-12 my-5">
-                    <select name="GetYear" id="years" className='px-3 py-2 text-dark' onChange={(e) => handleChange(e)}>
-                        <option value="Select Year">Select Year</option>
+                    <select name="GetYear" id="years" className='px-3 py-2 text-dark'  onChange={(e) => handleChange(e)}>
                         {
-                            years?.map((element, index) => <option value={element} key={index} name="GetYear">{element}</option>)
+                            years?.map((element, index) => <option defaultValue={new Date().getFullYear()} value={element} key={index} name="GetYear">{element}</option>)
                         }
                     </select>
                 </div>
@@ -256,7 +249,7 @@ const ExpenceChart = () => {
                 </div>
             </div>
             {/* Months Value Pass From Here Via using Props */}
-            <ExpenceByMonths year={years} month={months} alldata={dataByMonths}/>
+            <ExpenceByMonths year={years} month={months} alldata={dataByMonths} proData={props.proState}/>
         </div>
     )
 }

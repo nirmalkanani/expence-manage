@@ -6,6 +6,8 @@ import { TextField } from '@mui/material'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
 import { toast } from 'react-toastify'
+import ExpenceChart from "./ExpenceChart";
+import axios from "axios";
 
 const ExpenseForm = () => {
 
@@ -18,13 +20,23 @@ const ExpenseForm = () => {
 
     const [data, setData] = useState(INITIAL_STATE)
 
+    const [ proState, setProState ] = useState()
+
     const { description, amount, date } = data
 
+    const GetData = async () =>{
+        const GET = await axios.get('https://expense-tracker-fbcff-default-rtdb.asia-southeast1.firebasedatabase.app/expense.json')
+        console.log(GET.data)
+        setProState(Object.values(GET.data))
+    }
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
 
-    const getData = useSelector((state) => state.dataReducer.expencesData)
+    const handleAmount = (e) => {
+        const amt = e.target.value.replace(/\D/g, "")
+        setData({ ...data, [e.target.name]: amt })
+    }
 
     const dispatch = useDispatch()
 
@@ -38,10 +50,11 @@ const ExpenseForm = () => {
         if (!CheckData) {
             toast.error("Please Fill Data")
         } else if (!/[0-9]/g.test(amount)) {
-            toast.error("Please Eter Only Numbers")
+            toast.error("Please Enter Only Numbers")
         } else {
             dispatch(SENDALLDATA(JSON.stringify({ ...data, date: DATE, month: parseInt(MONTH) })))
             setData(INITIAL_STATE)
+            GetData()
         }
         e.preventDefault()
     }
@@ -78,15 +91,15 @@ const ExpenseForm = () => {
                                         label="Amount"
                                         name="amount"
                                         value={amount}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={(e) => handleAmount(e)}
                                         className='rounded  w-100 '
                                         autoComplete='off'
                                     />
                                 </div>
-                                <div className="input-gropu-section col-12 col-md-4  my-3">
+                                <div className="input-group-section col-12 col-md-4  my-3">
                                     <input type="date" className='w-100 w-md-75  p-3 rounded' onChange={(e) => handleChange(e)} name="date" value={date} />
                                 </div>
-                                <div className="input-gropu-section col-12 col-md-5 my-3  text-md-end">
+                                <div className="input-group-section col-12 col-md-5 my-3  text-md-end">
                                     <input type="submit" className='w-100 w-md-50 p-3 rounded btn btn-primary' value="Submit" />
                                 </div>
                             </div>
@@ -94,6 +107,7 @@ const ExpenseForm = () => {
                     </div>
                 </div>
             </div>
+            <ExpenceChart proState={proState}/>
         </div>
     )
 }

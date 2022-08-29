@@ -8,82 +8,83 @@ const ExpenceByMonths = (props) => {
 
     const [alldata, setAllData] = useState()
 
-    const [objKeys, setObjKeys] = useState()
-
-    const [objValues, setObjValues] = useState()
-
-    const GETDATA = async () => {
-        const response = await axios.get('https://expense-tracker-fbcff-default-rtdb.asia-southeast1.firebasedatabase.app/expense.json')
-        const OB_KEYS = Object.keys(response.data)
-        setObjKeys(OB_KEYS)
-        const OB_VALUES = Object.values(response.data)
-        setObjValues(OB_VALUES)
-
-        const ADD = OB_KEYS.map((element, index) =>
-            OB_VALUES[index].key = OB_KEYS[index]
-        )
-        GETDATA()
-    }
-
     const [editData, setEditData] = useState({
         amount: '',
         description: ''
     })
 
+    const [display, setDisplay] = useState(false)
+
+    const GETDATA = async () => {
+        const response = await axios.get('https://expense-tracker-fbcff-default-rtdb.asia-southeast1.firebasedatabase.app/expense.json')
+        const OB_KEYS = Object.keys(response.data)
+        const OB_VALUES = Object.values(response.data)
+
+        const ADD = OB_KEYS.map((element, index) =>
+            OB_VALUES[index].key = OB_KEYS[index]
+        )
+        await GETDATA()
+    }
+
     const dispatch = useDispatch()
 
     useEffect(() => {
-        GETDATA()
-        handleDelete()
-    }, [editData])
+        (async () => {
+            await GETDATA()
+            await CheckFun()
+        })()
+    }, [props.proState])
 
     const handleChange = (e) => {
-        const FilterData = objValues?.filter((element) => moment(element.date, "DD-MM-YYYY").format("MMMM") === e.target.value)
+        const FilterData = props.alldata?.filter((element) => moment(element.date, "DD-MM-YYYY").format("MMMM") === e?.target?.value)
         setAllData(FilterData)
-        console.log(FilterData)
     }
 
-    const handleDelete = (key) => {
+    const CheckFun = () => {
+        if(!handleChange()){
+            const Data = props.alldata?.filter((element) => moment(element.date, "DD-MM-YYYY").format("MMMM") == moment().format("MMMM"))
+            setAllData(Data)
+        }
+    }
+
+    // const handleDelete =  (e, key) => {
+    //     dispatch(DELETE(key))
+    //     handleChange({ target: { value : editData} })
+    //     GETDATA()
+    // }
+
+    const deleteData = async (key) => {
         dispatch(DELETE(key))
-        GETDATA()
+        handleChange({ target: { value : editData} })
+         GETDATA()
     }
 
     const handleEditData = (e, key) => {
-        const A = props.alldata.find((element, index) => element.key === key)
-        setEditData(A)
+        const UP_DATA = props.alldata.find((element) => element.key === key)
+        setEditData(UP_DATA)
         setEditData({ ...editData, [e.target.name]: e.target.value })
-
     }
-
-    const [display, setDisplay] = useState(false)
 
     const handleEdit = async (key) => {
         setDisplay(true)
     }
 
-    const handleSubmit = (e,key) => {
-        setDisplay(true)
-        const UPDATE_DATA = props.alldata.find((element, index) => element.key === key)
-
+    const handleEditBtn = async (e,key) => {
+        setDisplay(false)
+        const UPDATE_DATA = props.alldata.find((element) => element.key === key)
         const DataKey = UPDATE_DATA.key
-
         if (editData.amount == '') {
             editData.amount = UPDATE_DATA.amount
         } else {
             UPDATE_DATA.amount = editData.amount
         }
-
         if (editData.description == '') {
             editData.description = UPDATE_DATA.description
         } else {
             UPDATE_DATA.description = editData.description
         }
-
-        delete UPDATE_DATA.key;
-        console.log(UPDATE_DATA)
-
         dispatch(EDITDATA(UPDATE_DATA, DataKey))
-        
+        await GETDATA()
     }
 
     return (
@@ -91,9 +92,8 @@ const ExpenceByMonths = (props) => {
             <div className='row text-end'>
                 <div className="col-12 my-5">
                     <select name="month" id="month" className='px-3 py-2 text-dark' onChange={(e) => handleChange(e)}>
-                        <option value="Select Month">Select Month</option>
                         {
-                            props.month?.map((element, index) => <option value={element} key={index} name="GetMonth" >{element}</option>)
+                            props.month?.map((element, index) => <option defaultValue={new Date().getMonth()} value={element} key={index} name="GetMonth" >{element}</option>)
                         }
                     </select>
                 </div>
@@ -126,7 +126,7 @@ const ExpenceByMonths = (props) => {
                                                         </div>
                                                     </div>
                                                     <div className="col-2 text-end">
-                                                        <button className='btn btn-primary px-3 py-2' onClick={(e) => handleSubmit(e, element.key)}> Save </button>
+                                                        <button className='btn btn-primary px-3 py-2' onClick={(e) => handleEditBtn(e, element.key)}> Save </button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -136,7 +136,7 @@ const ExpenceByMonths = (props) => {
                             <div className="row">
                                 <div className="col-12 text-end">
                                     <button className="btn btn-success py-2 px-3 m-3" onClick={(e) => handleEdit(element.key)}>EDIT</button>
-                                    <button className="btn btn-danger py-2 px-3 m-3" onClick={(e) => handleDelete(element.key)}>DELETE</button>
+                                    <button className="btn btn-danger py-2 px-3 m-3" onClick={(e) => deleteData(element.key)}>DELETE</button>
                                 </div>
                             </div>
                         </div>
